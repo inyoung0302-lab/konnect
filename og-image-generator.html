@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>OG Image Generator — K-connect</title>
+  <style>
+    body { margin: 0; background: #111; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, sans-serif; }
+    canvas { border: 2px solid #333; }
+    button { margin-top: 20px; padding: 14px 32px; background: #FF2D5B; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; }
+    button:hover { background: #e0254f; }
+    p { color: #888; font-size: 13px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+<canvas id="c" width="1200" height="630"></canvas>
+<button onclick="download()">⬇ PNG 다운로드 (og-image.png)</button>
+<p>다운로드 후 GitHub konnect 레포에 og-image.png 로 업로드하세요</p>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const W = 1200, H = 630;
+
+// Background gradient
+const grad = ctx.createLinearGradient(0, 0, W, H);
+grad.addColorStop(0, '#0F0F1A');
+grad.addColorStop(0.5, '#1A0A12');
+grad.addColorStop(1, '#0A0A1A');
+ctx.fillStyle = grad;
+ctx.fillRect(0, 0, W, H);
+
+// Grid pattern
+ctx.strokeStyle = 'rgba(255,45,91,0.07)';
+ctx.lineWidth = 1;
+for (let x = 0; x < W; x += 60) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+for (let y = 0; y < H; y += 60) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+// Glow circle left
+const glow1 = ctx.createRadialGradient(200, 315, 0, 200, 315, 350);
+glow1.addColorStop(0, 'rgba(255,45,91,0.18)');
+glow1.addColorStop(1, 'rgba(255,45,91,0)');
+ctx.fillStyle = glow1;
+ctx.fillRect(0, 0, W, H);
+
+// Glow circle right
+const glow2 = ctx.createRadialGradient(1000, 315, 0, 1000, 315, 300);
+glow2.addColorStop(0, 'rgba(100,100,255,0.12)');
+glow2.addColorStop(1, 'rgba(100,100,255,0)');
+ctx.fillStyle = glow2;
+ctx.fillRect(0, 0, W, H);
+
+// Left side — main content
+// Flag emoji
+ctx.font = '72px serif';
+ctx.fillText('🇰🇷', 88, 195);
+
+// K-connect logo
+ctx.font = 'bold 86px -apple-system, Arial';
+const logoGrad = ctx.createLinearGradient(88, 200, 500, 300);
+logoGrad.addColorStop(0, '#FF2D5B');
+logoGrad.addColorStop(1, '#FF6B8A');
+ctx.fillStyle = logoGrad;
+ctx.fillText('K-connect', 88, 295);
+
+// Tagline
+ctx.font = '32px -apple-system, Arial';
+ctx.fillStyle = 'rgba(255,255,255,0.75)';
+ctx.fillText('Korea Travel, All in One Place', 88, 355);
+
+// Feature pills
+const features = ['🎭 Activities', '🗺 Navigation', '💱 Exchange', '🚇 Subway', '🌐 Translate', '🆘 SOS'];
+let px = 88, py = 430;
+features.forEach((f, i) => {
+  const tw = ctx.measureText(f).width;
+  const pw = tw + 32;
+
+  // pill bg
+  ctx.fillStyle = 'rgba(255,255,255,0.08)';
+  roundRect(ctx, px, py, pw, 48, 24);
+  ctx.fill();
+
+  // pill border
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+  ctx.lineWidth = 1;
+  roundRect(ctx, px, py, pw, 48, 24);
+  ctx.stroke();
+
+  // pill text
+  ctx.font = '20px -apple-system, Arial';
+  ctx.fillStyle = 'rgba(255,255,255,0.9)';
+  ctx.fillText(f, px + 16, py + 31);
+
+  px += pw + 14;
+  if (px > 680) { px = 88; py += 64; }
+});
+
+// Right side — phone mockup
+const mx = 820, my = 60, mw = 300, mh = 510;
+// Phone shadow
+ctx.shadowColor = 'rgba(255,45,91,0.3)';
+ctx.shadowBlur = 60;
+ctx.fillStyle = '#1C1C2E';
+roundRect(ctx, mx, my, mw, mh, 36);
+ctx.fill();
+ctx.shadowBlur = 0;
+
+// Phone screen
+ctx.fillStyle = '#FFFFFF';
+roundRect(ctx, mx + 8, my + 8, mw - 16, mh - 16, 28);
+ctx.fill();
+
+// Screen content — mini app preview
+ctx.fillStyle = '#FF2D5B';
+roundRect(ctx, mx + 8, my + 8, mw - 16, 90, [28, 28, 0, 0]);
+ctx.fill();
+
+ctx.font = 'bold 18px -apple-system, Arial';
+ctx.fillStyle = 'white';
+ctx.fillText('🇰🇷  K-connect', mx + 28, my + 58);
+
+// Mini cards
+const cards = ['🎭 Activities', '💱 Exchange Rate', '🗺 Naver Map', '🌐 Papago'];
+cards.forEach((c, i) => {
+  const cy = my + 115 + i * 90;
+  ctx.fillStyle = '#F8F8F8';
+  roundRect(ctx, mx + 20, cy, mw - 40, 72, 12);
+  ctx.fill();
+  ctx.font = '15px -apple-system, Arial';
+  ctx.fillStyle = '#333';
+  ctx.fillText(c, mx + 36, cy + 42);
+});
+
+// Bottom nav bar
+ctx.fillStyle = '#FAFAFA';
+roundRect(ctx, mx + 8, my + mh - 74, mw - 16, 66, [0, 0, 28, 28]);
+ctx.fill();
+const navItems = ['🏠','🎭','🔧','🆘'];
+navItems.forEach((n, i) => {
+  ctx.font = '22px serif';
+  ctx.fillText(n, mx + 28 + i * 65, my + mh - 32);
+});
+
+// Bottom tagline
+ctx.font = '24px -apple-system, Arial';
+ctx.fillStyle = 'rgba(255,255,255,0.4)';
+ctx.fillText('konnect-chi.vercel.app', 88, H - 40);
+
+// Version badge
+ctx.fillStyle = 'rgba(255,45,91,0.15)';
+roundRect(ctx, W - 220, H - 65, 140, 36, 18);
+ctx.fill();
+ctx.font = 'bold 16px -apple-system, Arial';
+ctx.fillStyle = '#FF2D5B';
+ctx.fillText('Free to use ✓', W - 207, H - 41);
+
+function roundRect(ctx, x, y, w, h, r) {
+  if (typeof r === 'number') r = [r, r, r, r];
+  ctx.beginPath();
+  ctx.moveTo(x + r[0], y);
+  ctx.lineTo(x + w - r[1], y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r[1]);
+  ctx.lineTo(x + w, y + h - r[2]);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r[2], y + h);
+  ctx.lineTo(x + r[3], y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r[3]);
+  ctx.lineTo(x, y + r[0]);
+  ctx.quadraticCurveTo(x, y, x + r[0], y);
+  ctx.closePath();
+}
+
+function download() {
+  const a = document.createElement('a');
+  a.download = 'og-image.png';
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+}
+</script>
+</body>
+</html>
