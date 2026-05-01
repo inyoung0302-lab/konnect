@@ -196,79 +196,110 @@
 
     /* ─── Hero Section ─── */
     .hero {
-      background: linear-gradient(150deg, var(--grad-start) 0%, var(--grad-end) 100%);
-      padding: 32px 20px 28px;
       position: relative;
+      height: 220px;
       overflow: hidden;
+      background: #0A0A14;
     }
-    .hero::before {
-      content: '';
+    .hero-bg {
       position: absolute;
-      top: -40px; right: -40px;
-      width: 200px; height: 200px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.08);
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1538669715315-155098f0fb1d?w=800&q=80');
+      background-size: cover;
+      background-position: center 40%;
+      filter: brightness(0.55) saturate(1.1);
     }
-    .hero::after {
-      content: '';
+    .hero-overlay {
       position: absolute;
-      bottom: -60px; left: -20px;
-      width: 160px; height: 160px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.06);
+      inset: 0;
+      background: linear-gradient(160deg, rgba(180,20,60,0.55) 0%, rgba(10,10,30,0.7) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 28px 20px 24px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
     }
     .hero-tag {
-      display: inline-block;
-      background: rgba(255,255,255,0.2);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
       color: white;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
-      padding: 4px 10px;
+      padding: 5px 11px;
       border-radius: 20px;
-      margin-bottom: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
     }
     .hero h1 {
-      font-size: 30px;
-      font-weight: 800;
+      font-size: 32px;
+      font-weight: 900;
       color: white;
-      line-height: 1.2;
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
+      line-height: 1.15;
+      letter-spacing: -0.8px;
+      margin: 0;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
     }
-    .hero p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.85);
-      margin-bottom: 20px;
-      line-height: 1.5;
+    .hero h1 em {
+      font-style: normal;
+      color: #FFB3C6;
     }
-    .hero-search {
-      display: flex;
-      background: white;
-      border-radius: 14px;
-      padding: 12px 16px;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    }
-    .hero-search span { font-size: 18px; }
-    .hero-search input {
-      flex: 1;
-      border: none;
-      outline: none;
-      font-size: 14px;
-      color: var(--dark);
-      font-family: inherit;
-    }
-    .hero-search input::placeholder { color: var(--gray); }
-    .search-btn {
-      background: var(--primary);
-      color: white;
-      padding: 6px 14px;
-      border-radius: 8px;
+    .hero-sub {
       font-size: 12px;
-      font-weight: 700;
+      color: rgba(255,255,255,0.75);
+      margin-top: 7px;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .hero-sub span {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .hero-sub .dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+    }
+    .hero-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .hero-chip {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .hero-chip:active { background: rgba(255,255,255,0.25); }
+    /* Section subtitle */
+    .section-subtitle {
+      font-size: 11px;
+      color: var(--gray);
+      padding: 0 20px 10px;
+      margin-top: -6px;
     }
 
     /* ─── Section Header ─── */
@@ -366,22 +397,7 @@
     .feat-card-price { font-size: 13px; font-weight: 700; color: var(--primary); margin-top: 6px; }
 
     /* ─── Stats Banner ─── */
-    .stats-banner {
-      margin: 16px 20px;
-      background: linear-gradient(135deg, #1C1C28, #2D2D3D);
-      border-radius: var(--radius);
-      padding: 20px;
-      display: flex;
-      gap: 0;
-    }
-    .stat-item {
-      flex: 1;
-      text-align: center;
-      border-right: 1px solid rgba(255,255,255,0.1);
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-num { font-size: 22px; font-weight: 800; color: white; }
-    .stat-label { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+    /* stats-banner removed */
 
     /* ─── Category Pills ─── */
     .cat-pills {
@@ -1005,46 +1021,42 @@
 
     <!-- Hero -->
     <div class="hero">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
-        <div class="hero-tag" style="margin-bottom:0;">✨ Korea Travel Companion</div>
-        <div class="weather-widget" id="weatherWidget" onclick="showToast('Weather data: Open-Meteo API')">
-          <span class="weather-emoji" id="weatherEmoji">🌡️</span>
-          <div class="weather-info">
-            <span class="weather-temp" id="weatherTemp">--°C</span>
-            <span class="weather-loc" id="weatherLoc">Seoul</span>
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-top">
+          <div class="hero-tag">🇰🇷 Korea Travel</div>
+          <div class="weather-widget" id="weatherWidget" onclick="showToast('Weather data: Open-Meteo API')">
+            <span class="weather-emoji" id="weatherEmoji">🌡️</span>
+            <div class="weather-info">
+              <span class="weather-temp" id="weatherTemp">--°C</span>
+              <span class="weather-loc" id="weatherLoc">Seoul</span>
+            </div>
           </div>
         </div>
-      </div>
-      <h1>Korea,<br>All Yours.</h1>
-      <p>Activities, tools &amp; local secrets — one place for your entire Korea trip.</p>
-      <div class="hero-search">
-        <span>🔍</span>
-        <input type="text" placeholder="Search activities (K-Beauty, Food, Culture…)" id="homeSearch" oninput="handleSearch(this.value)">
-        <button class="search-btn" onclick="switchTab('tab-activities')">Go</button>
-      </div>
-    </div>
-
-    <!-- Stats banner -->
-    <div class="stats-banner">
-      <div class="stat-item">
-        <div class="stat-num">50+</div>
-        <div class="stat-label">Activities</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">8</div>
-        <div class="stat-label">Essential Tools</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">24/7</div>
-        <div class="stat-label">SOS Support</div>
+        <div>
+          <h1>All of Korea,<br>in your <em>pocket</em>.</h1>
+          <div class="hero-sub">
+            <span>🗺 Navigate</span><div class="dot"></div>
+            <span>💱 Exchange</span><div class="dot"></div>
+            <span>🎭 Explore</span><div class="dot"></div>
+            <span>🆘 Stay Safe</span>
+          </div>
+        </div>
+        <div class="hero-chips">
+          <div class="hero-chip" onclick="switchTab('tab-activities')">✨ Activities</div>
+          <div class="hero-chip" onclick="switchTab('tab-guide')">📖 Guide</div>
+          <div class="hero-chip" onclick="switchTab('tab-sos')">🆘 SOS</div>
+        </div>
       </div>
     </div>
 
-    <!-- Quick Tools -->
+    <!-- Download These First -->
     <div class="section-header">
-      <div class="section-title" data-i18n="home.quickTools">⚡ Quick Tools</div>
+      <div class="section-title" data-i18n="home.quickTools">📲 Download These First</div>
       <div class="section-more" onclick="switchTab('tab-tools')" data-i18n="home.seeAll">See all</div>
     </div>
+    <div class="section-subtitle" data-i18n="home.toolsSub">Essential apps every Korea traveler needs</div>
     <div class="tools-grid">
       <!-- Wowpass -->
       <div class="tool-item" onclick="smartOpen('wowpass')">
@@ -1979,7 +1991,8 @@ let currentLang = localStorage.getItem('kc_lang') || 'en';
 const i18n = {
   en: {
     'nav.home':'Home','nav.activities':'Activities','nav.guide':'Guide','nav.tools':'Tools','nav.sos':'SOS',
-    'home.quickTools':'⚡ Quick Tools','home.seeAll':'See all','home.featured':'✨ Featured Activities','home.seeMore':'See more',
+    'home.quickTools':'📲 Download These First','home.seeAll':'See all','home.featured':'✨ Featured Activities','home.seeMore':'See more',
+    'home.toolsSub':'Essential apps every Korea traveler needs',
     'acts.title':'All Activities','acts.subtitle':'Curated experiences for every traveler.',
     'acts.filter.all':'All ✨','acts.filter.beauty':'💄 K-Beauty','acts.filter.culture':'🇰🇷 K-Culture','acts.filter.food':'🍜 Food','acts.filter.shopping':'🛍️ Shopping','acts.filter.medical':'💉 Medical',
     'acts.bookNow':'Book →','acts.notifyMe':'Notify Me',
@@ -2002,7 +2015,8 @@ const i18n = {
   },
   jp: {
     'nav.home':'ホーム','nav.activities':'アクティビティ','nav.guide':'ガイド','nav.tools':'ツール','nav.sos':'緊急',
-    'home.quickTools':'⚡ クイックツール','home.seeAll':'すべて','home.featured':'✨ おすすめアクティビティ','home.seeMore':'もっと見る',
+    'home.quickTools':'📲 まずこれをDL','home.seeAll':'すべて','home.featured':'✨ おすすめアクティビティ','home.seeMore':'もっと見る',
+    'home.toolsSub':'韓国旅行に必須のアプリ',
     'acts.title':'全アクティビティ','acts.subtitle':'すべての旅行者に向けた体験をご用意。',
     'acts.filter.all':'すべて ✨','acts.filter.beauty':'💄 K-ビューティー','acts.filter.culture':'🇰🇷 K-カルチャー','acts.filter.food':'🍜 グルメ','acts.filter.shopping':'🛍️ ショッピング','acts.filter.medical':'💉 メディカル',
     'acts.bookNow':'予約する →','acts.notifyMe':'通知を受け取る',
@@ -2025,7 +2039,8 @@ const i18n = {
   },
   cn: {
     'nav.home':'首页','nav.activities':'活动','nav.guide':'指南','nav.tools':'工具','nav.sos':'紧急',
-    'home.quickTools':'⚡ 快速工具','home.seeAll':'查看全部','home.featured':'✨ 精选活动','home.seeMore':'查看更多',
+    'home.quickTools':'📲 必装APP','home.seeAll':'查看全部','home.featured':'✨ 精选活动','home.seeMore':'查看更多',
+    'home.toolsSub':'韩国旅行必备应用',
     'acts.title':'全部活动','acts.subtitle':'为每位旅行者精心策划的体验。',
     'acts.filter.all':'全部 ✨','acts.filter.beauty':'💄 K-美妆','acts.filter.culture':'🇰🇷 K-文化','acts.filter.food':'🍜 美食','acts.filter.shopping':'🛍️ 购物','acts.filter.medical':'💉 医美',
     'acts.bookNow':'立即预订 →','acts.notifyMe':'通知我',
@@ -2189,7 +2204,43 @@ async function fetchExchangeRates() {
   }
 }
 
-// ── Real App Store Icons via iTunes Search API ──
+// ── App Icons: SVG replicas (instant) + real App Store icons (progressive) ──
+function getIconSVG(key) {
+  const svgs = {
+    wowpass:
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56">` +
+      `<rect width="56" height="56" rx="12" fill="white"/>` +
+      `<rect width="56" height="56" rx="12" fill="none" stroke="%23ddd" stroke-width="1.5"/>` +
+      `<text x="28" y="42" font-family="Arial Black,Arial" font-size="34" font-weight="900" fill="%23FF5E00" text-anchor="middle">W</text>` +
+      `</svg>`,
+    navermap:
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56">` +
+      `<defs><linearGradient id="ng" x1="0" y1="0" x2="1" y2="1">` +
+      `<stop offset="0%25" stop-color="%2303D25C"/>` +
+      `<stop offset="100%25" stop-color="%2300A2E0"/>` +
+      `</linearGradient></defs>` +
+      `<rect width="56" height="56" rx="12" fill="url(%23ng)"/>` +
+      `<text x="28" y="41" font-family="Arial Black,Arial" font-size="34" font-weight="900" fill="white" text-anchor="middle">N</text>` +
+      `</svg>`,
+    papago:
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56">` +
+      `<rect width="56" height="56" rx="12" fill="white"/>` +
+      `<rect width="56" height="56" rx="12" fill="none" stroke="%23ddd" stroke-width="1.5"/>` +
+      `<circle cx="28" cy="24" r="14" fill="%230066FF"/>` +
+      `<circle cx="28" cy="24" r="10" fill="%23E8F3FF"/>` +
+      `<text x="28" y="28" font-family="Arial" font-size="10" font-weight="800" fill="%230066FF" text-anchor="middle">Pa</text>` +
+      `<text x="28" y="48" font-family="Arial" font-size="8" fill="%230066FF" text-anchor="middle">PAPAGO</text>` +
+      `</svg>`,
+    subway:
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56">` +
+      `<rect width="56" height="56" rx="12" fill="%233A1E6E"/>` +
+      `<text x="28" y="37" font-family="Arial Black,Arial" font-size="28" font-weight="900" fill="white" text-anchor="middle">M</text>` +
+      `<rect x="11" y="40" width="34" height="3.5" rx="1.75" fill="%23B89CFF"/>` +
+      `</svg>`,
+  };
+  return `data:image/svg+xml,${svgs[key]}`;
+}
+
 async function initAppIcons() {
   const apps = [
     { key: 'wowpass',  id: '1494936001' },
@@ -2197,26 +2248,37 @@ async function initAppIcons() {
     { key: 'papago',   id: '1147874819' },
     { key: 'subway',   id: '325924444'  },
   ];
-  for (const { key, id } of apps) {
+
+  // Step 1 — Show SVG icon replicas immediately (zero latency, always correct)
+  for (const { key } of apps) {
+    const img = document.querySelector(`[data-appicon="${key}"]`);
+    const fb  = document.querySelector(`[data-appicon-fb="${key}"]`);
+    if (img) {
+      img.src = getIconSVG(key);
+      img.style.cssText = 'display:block;width:56px;height:56px;object-fit:cover;border-radius:14px;';
+    }
+    if (fb) fb.style.display = 'none';
+  }
+
+  // Step 2 — Silently upgrade to real App Store icons when API is available
+  await Promise.all(apps.map(async ({ key, id }) => {
     try {
-      const res = await fetch(`https://itunes.apple.com/lookup?id=${id}&country=kr`);
+      const res = await fetch(
+        `https://itunes.apple.com/lookup?id=${id}&country=kr&entity=software&limit=1`,
+        { signal: AbortSignal.timeout(5000) }
+      );
+      if (!res.ok) return;
       const data = await res.json();
       const artwork = data.results?.[0]?.artworkUrl512 || data.results?.[0]?.artworkUrl100;
-      if (artwork) {
-        const img = document.querySelector(`[data-appicon="${key}"]`);
-        const fb  = document.querySelector(`[data-appicon-fb="${key}"]`);
-        if (img) {
-          img.src = artwork;
-          img.style.display = 'block';
-          img.style.width = '56px';
-          img.style.height = '56px';
-          img.style.objectFit = 'cover';
-          img.style.borderRadius = '14px';
-          if (fb) fb.style.display = 'none';
-        }
-      }
-    } catch(e) { /* emoji fallback stays visible */ }
-  }
+      if (!artwork) return;
+      const img = document.querySelector(`[data-appicon="${key}"]`);
+      if (!img) return;
+      // Only swap once the real image has fully loaded
+      const probe = new Image();
+      probe.onload = () => { img.src = artwork; };
+      probe.src = artwork;
+    } catch(e) { /* keep SVG replica silently */ }
+  }));
 }
 
 // ── UTM Parameter → GA4 (critical for ad campaign attribution) ──
