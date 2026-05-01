@@ -124,13 +124,29 @@
       font-size: 16px;
       cursor: pointer;
     }
-    .lang-badge {
+    .lang-switcher {
+      display: flex;
+      background: #F2F2F7;
+      border-radius: 20px;
+      padding: 3px;
+      gap: 0;
+    }
+    .lang-btn {
       font-size: 11px;
       font-weight: 700;
-      color: var(--primary);
-      background: #FFF0F3;
-      padding: 4px 8px;
-      border-radius: 20px;
+      padding: 4px 11px;
+      border-radius: 17px;
+      border: none;
+      background: transparent;
+      color: #8E8E93;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: 0.3px;
+    }
+    .lang-btn.active {
+      background: #FF2D5B;
+      color: white;
+      box-shadow: 0 1px 4px rgba(255,45,91,0.35);
     }
 
     /* ─── Tab Content ─── */
@@ -790,16 +806,7 @@
 
     /* ─── Login Screen ─── */
     #loginScreen {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 32px;
-      text-align: center;
+      display: none;
     }
     #loginScreen.hidden { display: none; }
     .login-logo {
@@ -981,7 +988,11 @@
   <header class="header">
     <div class="header-logo">K-<span>connect</span></div>
     <div class="header-right">
-      <div class="lang-badge">🌐 EN</div>
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLanguage('en')" data-lang="en">EN</button>
+        <button class="lang-btn" onclick="setLanguage('jp')" data-lang="jp">JP</button>
+        <button class="lang-btn" onclick="setLanguage('cn')" data-lang="cn">CN</button>
+      </div>
       <div class="header-icon" onclick="showToast('Coming soon: notifications')">🔔</div>
       <img class="user-avatar" id="userAvatar" src="" alt="profile" onclick="handleSignOut()">
     </div>
@@ -1031,68 +1042,68 @@
 
     <!-- Quick Tools -->
     <div class="section-header">
-      <div class="section-title">⚡ Quick Tools</div>
-      <div class="section-more" onclick="switchTab('tab-tools')">See all</div>
+      <div class="section-title" data-i18n="home.quickTools">⚡ Quick Tools</div>
+      <div class="section-more" onclick="switchTab('tab-tools')" data-i18n="home.seeAll">See all</div>
     </div>
     <div class="tools-grid">
-      <!-- Wowpass — real icon loaded from iTunes API -->
+      <!-- Wowpass -->
       <div class="tool-item" onclick="smartOpen('wowpass')">
         <div class="tool-icon-wrap" style="background:#FFF0E8; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
-          <img id="icon-wowpass" width="56" height="56" style="object-fit:cover; border-radius:14px; display:none;" alt="Wowpass">
-          <span id="icon-wowpass-fb" style="font-size:26px;">💳</span>
+          <img data-appicon="wowpass" style="display:none;" alt="Wowpass">
+          <span data-appicon-fb="wowpass" style="font-size:26px;">💳</span>
         </div>
-        <div class="tool-label">Wowpass</div>
+        <div class="tool-label" data-i18n="tool.wowpass">Wowpass</div>
       </div>
 
-      <!-- Naver Map — real icon loaded from iTunes API -->
+      <!-- Naver Map -->
       <div class="tool-item" onclick="smartOpen('navermap')">
         <div class="tool-icon-wrap" style="background:#D6F5E3; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
-          <img id="icon-navermap" width="56" height="56" style="object-fit:cover; border-radius:14px; display:none;" alt="Naver Map">
-          <span id="icon-navermap-fb" style="font-size:26px;">🗺️</span>
+          <img data-appicon="navermap" style="display:none;" alt="Naver Map">
+          <span data-appicon-fb="navermap" style="font-size:26px;">🗺️</span>
         </div>
-        <div class="tool-label">Naver Map</div>
+        <div class="tool-label" data-i18n="tool.navermap">Naver Map</div>
       </div>
 
-      <!-- Papago — real icon loaded from iTunes API -->
+      <!-- Papago -->
       <div class="tool-item" onclick="smartOpen('papago')">
         <div class="tool-icon-wrap" style="background:#E8F0FF; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
-          <img id="icon-papago" width="56" height="56" style="object-fit:cover; border-radius:14px; display:none;" alt="Papago">
-          <span id="icon-papago-fb" style="font-size:26px;">🌐</span>
+          <img data-appicon="papago" style="display:none;" alt="Papago">
+          <span data-appicon-fb="papago" style="font-size:26px;">🌐</span>
         </div>
-        <div class="tool-label">Papago</div>
+        <div class="tool-label" data-i18n="tool.papago">Papago</div>
       </div>
 
-      <!-- Seoul Metro — real icon loaded from iTunes API -->
+      <!-- Seoul Metro -->
       <div class="tool-item" onclick="smartOpen('subway')">
         <div class="tool-icon-wrap" style="background:#D0DEFF; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
-          <img id="icon-subway" width="56" height="56" style="object-fit:cover; border-radius:14px; display:none;" alt="Seoul Metro">
-          <span id="icon-subway-fb" style="font-size:26px;">🚇</span>
+          <img data-appicon="subway" style="display:none;" alt="Seoul Metro">
+          <span data-appicon-fb="subway" style="font-size:26px;">🚇</span>
         </div>
-        <div class="tool-label">Seoul Metro</div>
+        <div class="tool-label" data-i18n="tool.subway">Seoul Metro</div>
       </div>
 
       <div class="tool-item" onclick="switchTab('tab-sos')">
         <div class="tool-icon-wrap" style="background:#FFE8E8">🆘</div>
-        <div class="tool-label">Emergency</div>
+        <div class="tool-label" data-i18n="tool.emergency">Emergency</div>
       </div>
       <div class="tool-item" onclick="openExternal('https://maps.google.com/maps?q=restaurants+near+me+seoul')">
         <div class="tool-icon-wrap" style="background:#FFF0E8">🍜</div>
-        <div class="tool-label">Food Map</div>
+        <div class="tool-label" data-i18n="tool.foodmap">Food Map</div>
       </div>
       <div class="tool-item" onclick="showConcierge()">
         <div class="tool-icon-wrap" style="background:#E8FFF5">🛎️</div>
-        <div class="tool-label">Concierge</div>
+        <div class="tool-label" data-i18n="tool.concierge">Concierge</div>
       </div>
       <div class="tool-item" onclick="switchTab('tab-activities')">
         <div class="tool-icon-wrap" style="background:#FFE8F5">✨</div>
-        <div class="tool-label">Activities</div>
+        <div class="tool-label" data-i18n="tool.activities">Activities</div>
       </div>
     </div>
 
     <!-- Featured Activities -->
     <div class="section-header">
-      <div class="section-title">🔥 Trending Now</div>
-      <div class="section-more" onclick="switchTab('tab-activities')">View all</div>
+      <div class="section-title" data-i18n="home.featured">✨ Featured Activities</div>
+      <div class="section-more" onclick="switchTab('tab-activities')" data-i18n="home.seeMore">See more</div>
     </div>
     <div class="scroll-row" id="featuredRow">
       <!-- Populated by JS — each card calls showComingSoonCard() -->
@@ -1187,8 +1198,8 @@
   ══════════════════════════════════════ -->
   <section id="tab-guide" class="tab-content">
     <div style="padding: 20px 20px 12px;">
-      <h2 style="font-size: 22px; font-weight: 800; letter-spacing: -0.3px;">Korea Essentials</h2>
-      <p style="font-size: 13px; color: var(--gray); margin-top: 4px;">Everything you need before & during your trip.</p>
+      <h2 style="font-size: 22px; font-weight: 800; letter-spacing: -0.3px;" data-i18n="guide.title">Korea Essentials</h2>
+      <p style="font-size: 13px; color: var(--gray); margin-top: 4px;" data-i18n="guide.subtitle">Everything you need before &amp; during your trip.</p>
     </div>
 
     <div class="guide-cards">
@@ -1198,8 +1209,8 @@
         <div class="guide-card-header">
           <div class="guide-icon" style="background:#E8F4FF">📱</div>
           <div>
-            <div class="guide-card-title">SIM Card / Pocket WiFi</div>
-            <div class="guide-card-sub">Stay connected from day 1</div>
+            <div class="guide-card-title" data-i18n="guide.sim.title">SIM Card / Pocket WiFi</div>
+            <div class="guide-card-sub" data-i18n="guide.sim.sub">Stay connected from day 1</div>
           </div>
         </div>
         <div class="guide-steps">
@@ -1224,8 +1235,8 @@
         <div class="guide-card-header">
           <div class="guide-icon" style="background:#FFF5CC">💳</div>
           <div>
-            <div class="guide-card-title">Wowpass (Transport + Money)</div>
-            <div class="guide-card-sub">One card for subway, bus, shopping</div>
+            <div class="guide-card-title" data-i18n="guide.wowpass.title">Wowpass (Transport + Money)</div>
+            <div class="guide-card-sub" data-i18n="guide.wowpass.sub">One card for subway, bus, shopping</div>
           </div>
         </div>
         <div class="guide-steps">
@@ -1250,8 +1261,8 @@
         <div class="guide-card-header">
           <div class="guide-icon" style="background:#F0E8FF">🚇</div>
           <div>
-            <div class="guide-card-title">Getting Around Seoul</div>
-            <div class="guide-card-sub">Subway, bus, taxi — decoded</div>
+            <div class="guide-card-title" data-i18n="guide.transport.title">Getting Around Seoul</div>
+            <div class="guide-card-sub" data-i18n="guide.transport.sub">Subway, bus, taxi — decoded</div>
           </div>
         </div>
         <div class="guide-steps">
@@ -1275,7 +1286,7 @@
 
     <!-- Quick Phrases -->
     <div class="section-header">
-      <div class="section-title">🗣️ Quick Korean Phrases</div>
+      <div class="section-title" data-i18n="guide.phrases.title">🗣️ Quick Korean Phrases</div>
     </div>
     <div class="phrase-grid">
       <div class="phrase-card" onclick="showToast('Copied: 감사합니다')">
@@ -1318,14 +1329,14 @@
   ══════════════════════════════════════ -->
   <section id="tab-tools" class="tab-content">
     <div style="padding: 20px 20px 12px;">
-      <h2 style="font-size: 22px; font-weight: 800; letter-spacing: -0.3px;">Travel Tools</h2>
-      <p style="font-size: 13px; color: var(--gray); margin-top: 4px;">Essential apps & tools, curated for you.</p>
+      <h2 style="font-size: 22px; font-weight: 800; letter-spacing: -0.3px;" data-i18n="tools.title">Travel Tools</h2>
+      <p style="font-size: 13px; color: var(--gray); margin-top: 4px;" data-i18n="tools.subtitle">Essential apps &amp; tools, curated for you.</p>
     </div>
 
     <!-- Exchange Rates -->
     <div class="exchange-widget">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <div class="exchange-title" style="margin-bottom:0;">💱 Live Exchange Rates</div>
+        <div class="exchange-title" style="margin-bottom:0;" data-i18n="tools.exchange.title">💱 Live Exchange Rates</div>
         <div id="exUpdated" style="font-size:10px; color:var(--gray);">Loading...</div>
       </div>
       <div class="exchange-row">
@@ -1421,55 +1432,55 @@
   ══════════════════════════════════════ -->
   <section id="tab-sos" class="tab-content">
     <div class="sos-hero">
-      <h2>🆘 Emergency Help</h2>
-      <p>Korea has excellent emergency services.<br>You're safe here — we've got your back.</p>
+      <h2 data-i18n="sos.title">🆘 Emergency Help</h2>
+      <p data-i18n="sos.subtitle">Korea has excellent emergency services.<br>You're safe here — we've got your back.</p>
     </div>
 
     <div class="sos-numbers">
       <div class="sos-card">
         <div class="sos-icon" style="background:#FFE8E8">🚔</div>
         <div class="sos-info">
-          <div class="sos-name">Police</div>
-          <div class="sos-detail">Theft, crime, lost items</div>
+          <div class="sos-name" data-i18n="sos.police.name">Police</div>
+          <div class="sos-detail" data-i18n="sos.police.detail">Theft, crime, lost items</div>
         </div>
         <a href="tel:112" class="sos-call-btn" style="background: #FF3B30">📞 112</a>
       </div>
       <div class="sos-card">
         <div class="sos-icon" style="background:#FFE8E8">🚑</div>
         <div class="sos-info">
-          <div class="sos-name">Fire / Ambulance</div>
-          <div class="sos-detail">Medical emergency, fire</div>
+          <div class="sos-name" data-i18n="sos.fire.name">Fire / Ambulance</div>
+          <div class="sos-detail" data-i18n="sos.fire.detail">Medical emergency, fire</div>
         </div>
         <a href="tel:119" class="sos-call-btn" style="background: #FF3B30">📞 119</a>
       </div>
       <div class="sos-card">
         <div class="sos-icon" style="background:#E8F4FF">🌏</div>
         <div class="sos-info">
-          <div class="sos-name">Korea Tourism Helpline</div>
-          <div class="sos-detail">24/7 · English, Japanese, Chinese</div>
+          <div class="sos-name" data-i18n="sos.helpline.name">Korea Tourism Helpline</div>
+          <div class="sos-detail" data-i18n="sos.helpline.detail">24/7 · English, Japanese, Chinese</div>
         </div>
         <a href="tel:1330" class="sos-call-btn blue">📞 1330</a>
       </div>
       <div class="sos-card">
         <div class="sos-icon" style="background:#FFF0E8">🏥</div>
         <div class="sos-info">
-          <div class="sos-name">Find Nearby Hospital</div>
-          <div class="sos-detail">English-speaking clinics & ERs</div>
+          <div class="sos-name" data-i18n="sos.hospital.name">Find Nearby Hospital</div>
+          <div class="sos-detail" data-i18n="sos.hospital.detail">English-speaking clinics &amp; ERs</div>
         </div>
         <a href="https://www.google.com/maps/search/hospital+near+me" target="_blank" class="sos-call-btn orange">Maps →</a>
       </div>
       <div class="sos-card">
         <div class="sos-icon" style="background:#E8FFE8">💊</div>
         <div class="sos-info">
-          <div class="sos-name">Find 24hr Pharmacy</div>
-          <div class="sos-detail">24-hour pharmacies near you</div>
+          <div class="sos-name" data-i18n="sos.pharmacy.name">Find 24hr Pharmacy</div>
+          <div class="sos-detail" data-i18n="sos.pharmacy.detail">24-hour pharmacies near you</div>
         </div>
         <a href="https://www.google.com/maps/search/24+hour+pharmacy+seoul" target="_blank" class="sos-call-btn" style="background:var(--green)">Maps →</a>
       </div>
 
       <!-- Safety Tips -->
       <div style="background: white; border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow);">
-        <div style="font-size: 14px; font-weight: 700; margin-bottom: 12px;">💡 Good to Know</div>
+        <div style="font-size: 14px; font-weight: 700; margin-bottom: 12px;" data-i18n="sos.tips.title">💡 Good to Know</div>
         <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: var(--dark); line-height: 1.5;">
           <div>🌙 <strong>Convenience stores (CU, GS25, 7-eleven)</strong> are open 24/7 everywhere — they sell medicine, food, ATMs.</div>
           <div>💳 <strong>No cash?</strong> Global ATMs at every convenience store. Citibank ATMs accept most foreign cards.</div>
@@ -1486,23 +1497,23 @@
   <nav class="bottom-nav">
     <div class="nav-item active" id="nav-home" onclick="switchTab('tab-home')">
       <div class="nav-icon">🏠</div>
-      <div class="nav-label">Home</div>
+      <div class="nav-label" data-i18n="nav.home">Home</div>
     </div>
     <div class="nav-item" id="nav-activities" onclick="switchTab('tab-activities')">
       <div class="nav-icon">✨</div>
-      <div class="nav-label">Activities</div>
+      <div class="nav-label" data-i18n="nav.activities">Activities</div>
     </div>
     <div class="nav-item" id="nav-guide" onclick="switchTab('tab-guide')">
       <div class="nav-icon">📖</div>
-      <div class="nav-label">Guide</div>
+      <div class="nav-label" data-i18n="nav.guide">Guide</div>
     </div>
     <div class="nav-item" id="nav-tools" onclick="switchTab('tab-tools')">
       <div class="nav-icon">🔧</div>
-      <div class="nav-label">Tools</div>
+      <div class="nav-label" data-i18n="nav.tools">Tools</div>
     </div>
     <div class="nav-item" id="nav-sos" onclick="switchTab('tab-sos')">
       <div class="nav-icon">🆘</div>
-      <div class="nav-label">SOS</div>
+      <div class="nav-label" data-i18n="nav.sos">SOS</div>
     </div>
   </nav>
 
@@ -1665,6 +1676,10 @@ const activities = [
     emoji: '💆',
     title: 'Facial Treatment Consultation',
     desc: 'Experience a world-class Korean dermatology consultation with top-tier skin analysis. Our partnered clinics in Gangnam offer personalized skin care plans used by K-pop stars.',
+    titleJP: 'フェイシャルトリートメント相談',
+    descJP: '韓国トップレベルの皮膚科で世界クラスのスキン分析を体験。江南の提携クリニックでK-POPスターも利用するパーソナルケアプランを提供。',
+    titleCN: '皮肤护理咨询',
+    descCN: '体验韩国顶级皮肤科的世界级皮肤分析。我们在江南的合作诊所提供K-pop明星使用的个性化护肤方案。',
     tags: ['Gangnam', 'English available', 'Beginner friendly'],
     duration: '60 min',
     language: 'EN/KR',
@@ -1681,6 +1696,10 @@ const activities = [
     emoji: '💅',
     title: 'Nail Art Experience',
     desc: 'Korean nail art is at another level. Visit a curated nail salon in Hongdae or Sinchon for uniquely crafted nail designs. Your nails will be Instagram-ready.',
+    titleJP: 'ネイルアート体験',
+    descJP: '韓国のネイルアートは次元が違う。弘大や新村のネイルサロンで独自デザインを楽しもう。インスタ映え間違いなし。',
+    titleCN: '美甲体验',
+    descCN: '韩国美甲艺术别具一格。在弘大或新村精选美甲沙龙打造独特设计，随时上镜。',
     tags: ['Hongdae', 'Nail art', 'Photo-worthy'],
     duration: '90 min',
     language: 'EN/KR/JP',
@@ -1697,6 +1716,10 @@ const activities = [
     emoji: '🌈',
     title: 'Personal Color Analysis',
     desc: 'Discover your personal color season (Spring, Summer, Autumn, Winter) with a certified Korean color consultant. Change how you shop for clothes and makeup forever.',
+    titleJP: 'パーソナルカラー診断',
+    descJP: '認定カラーコンサルタントによるパーソナルカラー診断（春・夏・秋・冬）。服やメイクの選び方が永遠に変わります。',
+    titleCN: '个人色彩分析',
+    descCN: '由认证韩国色彩顾问诊断您的个人色彩季（春、夏、秋、冬）。彻底改变您的穿搭与彩妆选择。',
     tags: ['Myeongdong', 'Certified stylist', 'Report included'],
     duration: '90 min',
     language: 'EN/JP',
@@ -1713,6 +1736,10 @@ const activities = [
     emoji: '💄',
     title: 'K-Beauty Makeup Session',
     desc: 'Get a full professional Korean makeup look by a top MUA. Learn K-beauty techniques like glass skin, gradient lips, and puppy eye liner that you can recreate at home.',
+    titleJP: 'K-ビューティーメイク体験',
+    descJP: 'トップMUAによるプロメイクを体験。グラスキン、グラデーションリップ、タレ目ライナーなど、自宅でも再現できるK-ビューティーテクニックを習得。',
+    titleCN: 'K-美妆造型体验',
+    descCN: '由顶级化妆师打造专业韩式妆容。学习玻璃肌、渐变唇色、下垂眼线等K-beauty技巧，在家轻松复现。',
     tags: ['Cheongdam', 'Pro MUA', 'Tutorial included'],
     duration: '60 min',
     language: 'EN/KR',
@@ -1729,6 +1756,10 @@ const activities = [
     emoji: '🛍️',
     title: 'Olive Young Expert Tour',
     desc: "Korea's #1 beauty store with a personal shopping guide. We decode the K-beauty aisle for you — what actually works, what celebrities buy, and the best value picks.",
+    titleJP: 'オリーブヤング専門ガイドツアー',
+    descJP: '韓国No.1コスメストアをパーソナルショッパーと巡ろう。本当に効くもの、芸能人愛用アイテム、コスパ最高の商品を厳選紹介。',
+    titleCN: 'Olive Young专家导购之旅',
+    descCN: '在韩国第一大美妆连锁店享受专属导购。为您解码K-beauty货架——真正有效的、明星爱用的、最具性价比的。',
     tags: ['Myeongdong', 'Free guide', 'Discount coupons'],
     duration: '2 hrs',
     language: 'EN/JP/CN',
@@ -1745,6 +1776,10 @@ const activities = [
     emoji: '🇰🇷',
     title: 'Korean Language Crash Course',
     desc: 'Learn to read Hangul in 2 hours — yes, it\'s that logical. A fun beginner class in a cute Hongdae café setting. Walk out able to read Korean menus and signs.',
+    titleJP: 'ハングル速習クラス',
+    descJP: 'ハングルを2時間でマスター — 本当にそれほど論理的。弘大のかわいいカフェでの楽しい初級クラス。韓国語のメニューや看板が読めるようになって帰ろう。',
+    titleCN: '韩语速成班',
+    descCN: '2小时学会读韩文——逻辑清晰，真的不难。弘大温馨咖啡馆里的趣味初级课程，结束后能读懂菜单和路牌。',
     tags: ['Hongdae', 'Beginner', 'Certificate'],
     duration: '2 hrs',
     language: 'EN',
@@ -1761,6 +1796,10 @@ const activities = [
     emoji: '👘',
     title: 'Hanbok Wearing Experience',
     desc: 'Dress in traditional Korean Hanbok and explore the beautiful Gyeongbokgung Palace grounds. Includes professional photo spots and a palace tour guide.',
+    titleJP: '韓服（ハンボク）着用体験',
+    descJP: '伝統的な韓服を着て美しい景福宮を散策。プロ撮影スポットと宮廷ツアーガイド付き。',
+    titleCN: '韩服体验',
+    descCN: '穿上传统韩服游览美丽的景福宫。含专业拍照地点和宫殿导览。',
     tags: ['Gyeongbokgung', 'Photos included', 'All sizes'],
     duration: '2 hrs',
     language: 'EN/JP/CN',
@@ -1777,6 +1816,10 @@ const activities = [
     emoji: '⚾',
     title: 'Korean Baseball Game',
     desc: 'The most energetic stadium experience in Asia. Korean baseball fans are legendary — synchronized cheering, fried chicken delivery to your seat, and non-stop fun.',
+    titleJP: '韓国プロ野球観戦',
+    descJP: 'アジア最高の熱狂スタジアム体験。シンクロ応援、座席へのチキンデリバリー、ノンストップの楽しさ。',
+    titleCN: '韩国棒球赛观战',
+    descCN: '亚洲最热闹的球场体验。整齐助威、座位送炸鸡、欢乐无处不在。',
     tags: ['Jamsil Stadium', 'All seasons', 'Chicken & beer'],
     duration: '3–4 hrs',
     language: 'All',
@@ -1793,6 +1836,10 @@ const activities = [
     emoji: '🎬',
     title: 'K-Drama Location Tour',
     desc: 'Visit real filming locations from Crash Landing on You, Squid Game, Itaewon Class, and more. Our guide has behind-the-scenes stories straight from production crews.',
+    titleJP: 'K-ドラマロケ地ツアー',
+    descJP: '「愛の不時着」「イカゲーム」「梨泰院クラス」などの実際のロケ地を訪問。ガイドが制作裏話を紹介。',
+    titleCN: 'K-剧拍摄地巡游',
+    descCN: '探访《爱的迫降》《鱿鱼游戏》《梨泰院Class》等剧的真实取景地，导游分享幕后故事。',
     tags: ['Various locations', 'Mini-van tour', 'Photo stops'],
     duration: '4 hrs',
     language: 'EN/JP',
@@ -1809,6 +1856,10 @@ const activities = [
     emoji: '📸',
     title: 'K-Pop Photo Shoot / Vlogger',
     desc: 'Become the main character. Professional photographer, K-pop MV style locations, and a video reel for your social media. Used by thousands of travel influencers.',
+    titleJP: 'K-POPフォトシュート',
+    descJP: '主人公になろう。プロカメラマン、K-POP MV風ロケーション、SNS用動画リール付き。数千人のインフルエンサーが利用。',
+    titleCN: 'K-pop写真拍摄',
+    descCN: '成为主角。专业摄影师+K-pop MV风格取景地，附社媒专属视频。已有数千名旅行博主使用。',
     tags: ['Mapo', 'Pro photographer', 'Same-day delivery'],
     duration: '2 hrs',
     language: 'EN/JP',
@@ -1825,6 +1876,10 @@ const activities = [
     emoji: '🥢',
     title: 'Korean Street Food Tour',
     desc: 'Eat your way through Gwangjang Market and Myeongdong with a local foodie guide. Tteokbokki, bindaetteok, sundae, hotteok — the real Seoul food experience.',
+    titleJP: '韓国屋台グルメツアー',
+    descJP: 'ローカルガイドと広蔵市場・明洞を食べ歩き。トッポキ、ビンデトッ、スンデ、ホットク — 本物のソウルグルメ体験。',
+    titleCN: '韩国街头美食之旅',
+    descCN: '跟随本地美食达人逛广藏市场和明洞。辣炒年糕、绿豆煎饼、顺大、糖饼——真正的首尔美食体验。',
     tags: ['Gwangjang Market', 'Myeongdong', 'Small groups'],
     duration: '2.5 hrs',
     language: 'EN/JP',
@@ -1841,6 +1896,10 @@ const activities = [
     emoji: '🥘',
     title: 'K-Food Cooking Class',
     desc: 'Cook 4 iconic Korean dishes (bibimbap, kimchi jjigae, japchae, and pajeon) in a traditional kitchen with a local halmeoni. Recipe book included.',
+    titleJP: 'K-フード料理教室',
+    descJP: 'ローカルのハルモニと伝統キッチンで4品（ビビンバ、キムチチゲ、チャプチェ、パジョン）を調理。レシピ本付き。',
+    titleCN: '韩餐烹饪课',
+    descCN: '与当地奶奶在传统厨房烹制4道经典菜（拌饭、泡菜汤、杂菜、葱饼）。含食谱书。',
     tags: ['Insadong', 'Market visit', 'Recipe book'],
     duration: '3 hrs',
     language: 'EN/JP',
@@ -1857,6 +1916,10 @@ const activities = [
     emoji: '🍓',
     title: 'Strawberry Picking & Farm Experience',
     desc: 'Escape Seoul to a beautiful strawberry farm 1 hour away. Pick unlimited strawberries, make strawberry jam, and enjoy a farm BBQ lunch. The ultimate K-rural experience.',
+    titleJP: 'いちご狩り＆農場体験',
+    descJP: 'ソウルから1時間のいちご農場へ。食べ放題のいちご狩り、ジャム作り、BBQランチ。究極のK-農村体験。',
+    titleCN: '草莓采摘&农场体验',
+    descCN: '前往首尔1小时外的草莓农场。无限采摘、制作草莓酱、享用农场BBQ午餐。极致的韩国乡村体验。',
     tags: ['Day trip', 'Transport included', 'BBQ lunch'],
     duration: '6 hrs (day trip)',
     language: 'EN/JP/CN',
@@ -1873,6 +1936,10 @@ const activities = [
     emoji: '🏬',
     title: 'Premium Outlet Day Tour',
     desc: 'Yeoju or Paju Premium Outlets — think Nike, Adidas, LG electronics, Korean brands at 30–70% off. Shuttle included from Hongdae. Our guide helps you find the best deals.',
+    titleJP: 'プレミアムアウトレット日帰りツアー',
+    descJP: 'ヨジュ・パジュアウトレット — ナイキ、アディダス等が30〜70%オフ。弘大からシャトル付き。',
+    titleCN: '名牌折扣店一日游',
+    descCN: '骊州或坡州Premium Outlets——耐克、阿迪达斯等打折3-7折。含弘大出发班车。',
     tags: ['Paju/Yeoju', 'Shuttle included', 'Discount booklet'],
     duration: '5 hrs',
     language: 'EN/JP',
@@ -1889,6 +1956,10 @@ const activities = [
     emoji: '💉',
     title: 'Aesthetic Clinic Consultation',
     desc: 'World-class aesthetic procedures — botox, filler, skin boosters — at Gangnam\'s top clinics. Prices 40–60% lower than US/Europe. English-speaking doctors, zero pressure consultation.',
+    titleJP: '美容クリニック無料相談',
+    descJP: '江南トップクリニックでボトックス・フィラー・スキンブースター。米国・欧州より40〜60%安。英語対応医師、プレッシャーなしの無料相談。',
+    titleCN: '医美诊所免费咨询',
+    descCN: '江南顶级诊所的肉毒素、填充剂、水光针——价格比欧美低40-60%。英语医生，零压力免费咨询。',
     tags: ['Gangnam', 'English doctors', 'Free consultation'],
     duration: '60 min',
     language: 'EN/JP/CN',
@@ -1902,6 +1973,105 @@ const activities = [
 let currentCategory = 'all';
 let currentActivityId = null;
 
+// ── i18n Localization System ──
+let currentLang = localStorage.getItem('kc_lang') || 'en';
+
+const i18n = {
+  en: {
+    'nav.home':'Home','nav.activities':'Activities','nav.guide':'Guide','nav.tools':'Tools','nav.sos':'SOS',
+    'home.quickTools':'⚡ Quick Tools','home.seeAll':'See all','home.featured':'✨ Featured Activities','home.seeMore':'See more',
+    'acts.title':'All Activities','acts.subtitle':'Curated experiences for every traveler.',
+    'acts.filter.all':'All ✨','acts.filter.beauty':'💄 K-Beauty','acts.filter.culture':'🇰🇷 K-Culture','acts.filter.food':'🍜 Food','acts.filter.shopping':'🛍️ Shopping','acts.filter.medical':'💉 Medical',
+    'acts.bookNow':'Book →','acts.notifyMe':'Notify Me',
+    'guide.title':'Korea Essentials','guide.subtitle':'Everything you need before & during your trip.',
+    'guide.sim.title':'SIM Card / Pocket WiFi','guide.sim.sub':'Stay connected from day 1',
+    'guide.wowpass.title':'Wowpass (Transport + Money)','guide.wowpass.sub':'One card for subway, bus, shopping',
+    'guide.transport.title':'Getting Around Seoul','guide.transport.sub':'Subway, bus, taxi — decoded',
+    'guide.phrases.title':'🗣️ Quick Korean Phrases',
+    'tools.title':'Travel Tools','tools.subtitle':'Essential apps & tools, curated for you.',
+    'tools.exchange.title':'💱 Live Exchange Rates',
+    'sos.title':'🆘 Emergency Help','sos.subtitle':'Korea has excellent emergency services.\nYou\'re safe here — we\'ve got your back.',
+    'sos.police.name':'Police','sos.police.detail':'Theft, crime, lost items',
+    'sos.fire.name':'Fire / Ambulance','sos.fire.detail':'Medical emergency, fire',
+    'sos.helpline.name':'Korea Tourism Helpline','sos.helpline.detail':'24/7 · English, Japanese, Chinese',
+    'sos.hospital.name':'Find Nearby Hospital','sos.hospital.detail':'English-speaking clinics & ERs',
+    'sos.pharmacy.name':'Find 24hr Pharmacy','sos.pharmacy.detail':'24-hour pharmacies near you',
+    'sos.tips.title':'💡 Good to Know',
+    'tool.wowpass':'Wowpass','tool.navermap':'Naver Map','tool.papago':'Papago','tool.subway':'Seoul Metro',
+    'tool.emergency':'Emergency','tool.foodmap':'Food Map','tool.concierge':'Concierge','tool.activities':'Activities',
+  },
+  jp: {
+    'nav.home':'ホーム','nav.activities':'アクティビティ','nav.guide':'ガイド','nav.tools':'ツール','nav.sos':'緊急',
+    'home.quickTools':'⚡ クイックツール','home.seeAll':'すべて','home.featured':'✨ おすすめアクティビティ','home.seeMore':'もっと見る',
+    'acts.title':'全アクティビティ','acts.subtitle':'すべての旅行者に向けた体験をご用意。',
+    'acts.filter.all':'すべて ✨','acts.filter.beauty':'💄 K-ビューティー','acts.filter.culture':'🇰🇷 K-カルチャー','acts.filter.food':'🍜 グルメ','acts.filter.shopping':'🛍️ ショッピング','acts.filter.medical':'💉 メディカル',
+    'acts.bookNow':'予約する →','acts.notifyMe':'通知を受け取る',
+    'guide.title':'韓国旅行の基本','guide.subtitle':'旅行前と旅行中に必要なすべて。',
+    'guide.sim.title':'SIMカード / ポケットWiFi','guide.sim.sub':'到着初日からネット接続',
+    'guide.wowpass.title':'Wowpass（交通＋両替）','guide.wowpass.sub':'地下鉄・バス・ショッピングを1枚で',
+    'guide.transport.title':'ソウルの移動手段','guide.transport.sub':'地下鉄・バス・タクシーを使いこなそう',
+    'guide.phrases.title':'🗣️ よく使う韓国語フレーズ',
+    'tools.title':'旅行ツール','tools.subtitle':'旅行に必要なアプリ・ツールを厳選。',
+    'tools.exchange.title':'💱 リアルタイム為替レート',
+    'sos.title':'🆘 緊急ヘルプ','sos.subtitle':'韓国の緊急サービスは充実しています。\nご安心ください。',
+    'sos.police.name':'警察','sos.police.detail':'盗難・犯罪・紛失物',
+    'sos.fire.name':'消防・救急','sos.fire.detail':'医療緊急・火災',
+    'sos.helpline.name':'韓国観光ヘルプライン','sos.helpline.detail':'24時間・英語・日本語・中国語対応',
+    'sos.hospital.name':'近くの病院を探す','sos.hospital.detail':'英語対応クリニック・救急病院',
+    'sos.pharmacy.name':'24時間薬局を探す','sos.pharmacy.detail':'近くの24時間薬局',
+    'sos.tips.title':'💡 知っておくと便利',
+    'tool.wowpass':'ウォウパス','tool.navermap':'ネイバーマップ','tool.papago':'パパゴ','tool.subway':'ソウル地下鉄',
+    'tool.emergency':'緊急','tool.foodmap':'グルメマップ','tool.concierge':'コンシェルジュ','tool.activities':'アクティビティ',
+  },
+  cn: {
+    'nav.home':'首页','nav.activities':'活动','nav.guide':'指南','nav.tools':'工具','nav.sos':'紧急',
+    'home.quickTools':'⚡ 快速工具','home.seeAll':'查看全部','home.featured':'✨ 精选活动','home.seeMore':'查看更多',
+    'acts.title':'全部活动','acts.subtitle':'为每位旅行者精心策划的体验。',
+    'acts.filter.all':'全部 ✨','acts.filter.beauty':'💄 K-美妆','acts.filter.culture':'🇰🇷 K-文化','acts.filter.food':'🍜 美食','acts.filter.shopping':'🛍️ 购物','acts.filter.medical':'💉 医美',
+    'acts.bookNow':'立即预订 →','acts.notifyMe':'通知我',
+    'guide.title':'韩国旅行必备','guide.subtitle':'出发前和旅途中所需的一切。',
+    'guide.sim.title':'SIM卡 / 随身WiFi','guide.sim.sub':'从第一天起保持网络连接',
+    'guide.wowpass.title':'Wowpass（交通＋换汇）','guide.wowpass.sub':'一张卡搞定地铁、公交、购物',
+    'guide.transport.title':'首尔交通指南','guide.transport.sub':'地铁、公交、出租车一网打尽',
+    'guide.phrases.title':'🗣️ 常用韩语短句',
+    'tools.title':'旅行工具','tools.subtitle':'为您精选的必备应用与工具。',
+    'tools.exchange.title':'💱 实时汇率',
+    'sos.title':'🆘 紧急求助','sos.subtitle':'韩国的紧急服务完善。\n您在这里很安全。',
+    'sos.police.name':'警察','sos.police.detail':'盗窃、犯罪、遗失物品',
+    'sos.fire.name':'消防/救护车','sos.fire.detail':'医疗紧急情况、火灾',
+    'sos.helpline.name':'韩国旅游热线','sos.helpline.detail':'24/7 · 英语、日语、中文服务',
+    'sos.hospital.name':'查找附近医院','sos.hospital.detail':'提供英语服务的诊所和急救室',
+    'sos.pharmacy.name':'查找24小时药店','sos.pharmacy.detail':'附近的24小时药店',
+    'sos.tips.title':'💡 实用小贴士',
+    'tool.wowpass':'Wowpass','tool.navermap':'导航地图','tool.papago':'翻译','tool.subway':'首尔地铁',
+    'tool.emergency':'紧急','tool.foodmap':'美食地图','tool.concierge':'礼宾服务','tool.activities':'活动',
+  }
+};
+
+function t(key) {
+  return (i18n[currentLang] && i18n[currentLang][key]) || (i18n['en'] && i18n['en'][key]) || key;
+}
+
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('kc_lang', lang);
+  // Update lang btn active state
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  // Update all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = t(key);
+    if (val.includes('\n')) {
+      el.innerHTML = val.replace(/\n/g, '<br>');
+    } else {
+      el.textContent = val;
+    }
+  });
+  // Re-render activities in new language
+  filterActivities(currentCategory);
+  renderFeatured();
+}
+
 // ── Render Activity List ──
 function renderActivities(list) {
   const container = document.getElementById('activityList');
@@ -1914,7 +2084,7 @@ function renderActivities(list) {
       <div class="act-emoji" style="background:${a.catBg}">${a.emoji}</div>
       <div class="act-info">
         <div class="act-cat" style="color:${a.catColor}">${a.category}</div>
-        <div class="act-title">${a.title}</div>
+        <div class="act-title">${currentLang === 'jp' && a.titleJP ? a.titleJP : currentLang === 'cn' && a.titleCN ? a.titleCN : a.title}</div>
         <div class="act-meta">
           <span class="act-rating">★ ${a.rating}</span>
           <span>(${a.reviews})</span>
@@ -1922,7 +2092,7 @@ function renderActivities(list) {
         </div>
         <div class="act-footer">
           <div class="act-price">${a.price} <span>/ person</span></div>
-          <button class="act-book-btn">Book →</button>
+          <button class="act-book-btn">${t('acts.bookNow')}</button>
         </div>
       </div>
     </div>
@@ -1955,19 +2125,21 @@ function filterActivities(cat, searchTerm) {
 function renderFeatured() {
   const featured = activities.filter(a => a.featured);
   const row = document.getElementById('featuredRow');
-  row.innerHTML = featured.map(a => `
-    <div class="feat-card" onclick="showComingSoonCard('${a.title.replace(/'/g,"\\'")}','${a.emoji}','${a.category}')">
+  row.innerHTML = featured.map(a => {
+    const displayTitle = currentLang === 'jp' && a.titleJP ? a.titleJP : currentLang === 'cn' && a.titleCN ? a.titleCN : a.title;
+    return `
+    <div class="feat-card" onclick="showComingSoonCard('${displayTitle.replace(/'/g,"\\'")}','${a.emoji}','${a.category}')">
       <div class="feat-card-img" style="background:${a.catBg}">
         <div class="feat-card-badge">🔥 Hot</div>
         ${a.emoji}
       </div>
       <div class="feat-card-body">
-        <div class="feat-card-title">${a.title}</div>
+        <div class="feat-card-title">${displayTitle}</div>
         <div class="feat-card-meta">🕒 ${a.duration} · ${a.category}</div>
         <div class="feat-card-price">${a.price}</div>
       </div>
     </div>
-  `).join('');
+  `}).join('');
 }
 
 // ── Coming Soon — click intent tracking + notify signup ──
@@ -2027,18 +2199,23 @@ async function initAppIcons() {
   ];
   for (const { key, id } of apps) {
     try {
-      const res = await fetch(`https://itunes.apple.com/lookup?id=${id}&country=us`);
+      const res = await fetch(`https://itunes.apple.com/lookup?id=${id}&country=kr`);
       const data = await res.json();
       const artwork = data.results?.[0]?.artworkUrl512 || data.results?.[0]?.artworkUrl100;
       if (artwork) {
-        const img = document.getElementById(`icon-${key}`);
-        const fb  = document.getElementById(`icon-${key}-fb`);
+        const img = document.querySelector(`[data-appicon="${key}"]`);
+        const fb  = document.querySelector(`[data-appicon-fb="${key}"]`);
         if (img) {
           img.src = artwork;
-          img.onload = () => { img.style.display = 'block'; if (fb) fb.style.display = 'none'; };
+          img.style.display = 'block';
+          img.style.width = '56px';
+          img.style.height = '56px';
+          img.style.objectFit = 'cover';
+          img.style.borderRadius = '14px';
+          if (fb) fb.style.display = 'none';
         }
       }
-    } catch(e) { /* SVG emoji fallback stays */ }
+    } catch(e) { /* emoji fallback stays visible */ }
   }
 }
 
@@ -2069,22 +2246,24 @@ function showPrivacyPolicy() {
 function openActivity(id) {
   const a = activities[id];
   currentActivityId = id;
+  const displayTitle = currentLang === 'jp' && a.titleJP ? a.titleJP : currentLang === 'cn' && a.titleCN ? a.titleCN : a.title;
+  const displayDesc = currentLang === 'jp' && a.descJP ? a.descJP : currentLang === 'cn' && a.descCN ? a.descCN : a.desc;
   document.getElementById('modalImg').style.background = a.catBg;
   document.getElementById('modalImg').textContent = a.emoji;
   document.getElementById('modalImg').style.fontSize = '72px';
   document.getElementById('modalCat').textContent = a.category;
   document.getElementById('modalCat').style.color = a.catColor;
-  document.getElementById('modalTitle').textContent = a.title;
+  document.getElementById('modalTitle').textContent = displayTitle;
   document.getElementById('modalStars').textContent = '★'.repeat(Math.round(a.rating));
   document.getElementById('modalRatingNum').textContent = a.rating;
   document.getElementById('modalReviews').textContent = `(${a.reviews} reviews)`;
-  document.getElementById('modalDesc').textContent = a.desc;
+  document.getElementById('modalDesc').textContent = displayDesc;
   document.getElementById('modalTags').innerHTML = a.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
   document.getElementById('modalDuration').textContent = a.duration;
   document.getElementById('modalLang').textContent = a.language;
   document.getElementById('modalPrice').textContent = a.price;
   document.getElementById('modalOverlay').classList.add('open');
-  trackEvent('activity_view', a.title);
+  trackEvent('activity_view', displayTitle);
 }
 
 function closeModal(e) {
@@ -2394,6 +2573,12 @@ initWeather();
 fetchExchangeRates();
 initAppIcons();
 trackUTM();
+
+// Apply saved language on load
+if (currentLang !== 'en') setLanguage(currentLang);
+else {
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === 'en'));
+}
 </script>
 </body>
 </html>
