@@ -1060,7 +1060,7 @@
     <div class="tools-grid">
       <!-- Wowpass -->
       <div class="tool-item" onclick="smartOpen('wowpass')">
-        <div class="tool-icon-wrap" style="background:#FFF0E8; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
+        <div class="tool-icon-wrap" style="background:transparent; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
           <img data-appicon="wowpass" style="display:none;" alt="Wowpass">
           <span data-appicon-fb="wowpass" style="font-size:26px;">💳</span>
         </div>
@@ -1069,7 +1069,7 @@
 
       <!-- Naver Map -->
       <div class="tool-item" onclick="smartOpen('navermap')">
-        <div class="tool-icon-wrap" style="background:#D6F5E3; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
+        <div class="tool-icon-wrap" style="background:transparent; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
           <img data-appicon="navermap" style="display:none;" alt="Naver Map">
           <span data-appicon-fb="navermap" style="font-size:26px;">🗺️</span>
         </div>
@@ -1078,7 +1078,7 @@
 
       <!-- Papago -->
       <div class="tool-item" onclick="smartOpen('papago')">
-        <div class="tool-icon-wrap" style="background:#E8F0FF; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
+        <div class="tool-icon-wrap" style="background:transparent; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
           <img data-appicon="papago" style="display:none;" alt="Papago">
           <span data-appicon-fb="papago" style="font-size:26px;">🌐</span>
         </div>
@@ -1087,7 +1087,7 @@
 
       <!-- Seoul Metro -->
       <div class="tool-item" onclick="smartOpen('subway')">
-        <div class="tool-icon-wrap" style="background:#D0DEFF; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
+        <div class="tool-icon-wrap" style="background:transparent; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
           <img data-appicon="subway" style="display:none;" alt="Seoul Metro">
           <span data-appicon-fb="subway" style="font-size:26px;">🚇</span>
         </div>
@@ -2210,7 +2210,6 @@ function getIconSVG(key) {
     wowpass:
       `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56">` +
       `<rect width="56" height="56" rx="12" fill="white"/>` +
-      `<rect width="56" height="56" rx="12" fill="none" stroke="%23ddd" stroke-width="1.5"/>` +
       `<text x="28" y="42" font-family="Arial Black,Arial" font-size="34" font-weight="900" fill="%23FF5E00" text-anchor="middle">W</text>` +
       `</svg>`,
     navermap:
@@ -2255,7 +2254,7 @@ async function initAppIcons() {
     const fb  = document.querySelector(`[data-appicon-fb="${key}"]`);
     if (img) {
       img.src = getIconSVG(key);
-      img.style.cssText = 'display:block;width:56px;height:56px;object-fit:cover;border-radius:14px;';
+      img.style.cssText = 'display:block;width:100%;height:100%;object-fit:cover;border-radius:14px;';
     }
     if (fb) fb.style.display = 'none';
   }
