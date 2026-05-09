@@ -1089,7 +1089,7 @@
         <div class="tool-label" data-i18n="tool.subway">Seoul Metro</div>
       </div>
 
-      <div class="tool-item" onclick="switchTab('tab-sos')">
+      <div class="tool-item" onclick="trackEvent('app_click','emergency');switchTab('tab-sos')">
         <div class="tool-icon-wrap" style="background:#FFE8E8">🆘</div>
         <div class="tool-label" data-i18n="tool.emergency">Emergency</div>
       </div>
@@ -1097,11 +1097,11 @@
         <div class="tool-icon-wrap" style="background:#FFF0E8">🍜</div>
         <div class="tool-label" data-i18n="tool.foodmap">Food Map</div>
       </div>
-      <div class="tool-item" onclick="showConcierge()">
+      <div class="tool-item" onclick="trackEvent('app_click','concierge');showConcierge()">
         <div class="tool-icon-wrap" style="background:#E8FFF5">🛎️</div>
         <div class="tool-label" data-i18n="tool.concierge">Concierge</div>
       </div>
-      <div class="tool-item" onclick="switchTab('tab-activities')">
+      <div class="tool-item" onclick="trackEvent('app_click','activities');switchTab('tab-activities')">
         <div class="tool-icon-wrap" style="background:#FFE8F5">✨</div>
         <div class="tool-label" data-i18n="tool.activities">Activities</div>
       </div>
@@ -2436,6 +2436,7 @@ const appConfig = {
 
 // ── Smart Open App ──
 function smartOpen(appKey) {
+  trackEvent('app_click', appKey); // GA4: 어떤 앱 아이콘 클릭했는지
   const app = appConfig[appKey];
   const ua = navigator.userAgent;
   const isIOS = /iPad|iPhone|iPod/.test(ua);
@@ -2476,6 +2477,7 @@ function closeAppSheet(e) {
 
 // ── External Links ──
 function openExternal(url) {
+  trackEvent('external_link_click', url); // GA4: 외부 링크 클릭
   window.open(url, '_blank');
 }
 
@@ -2564,6 +2566,31 @@ function trackEvent(eventName, label) {
     gtag('event', eventName, { event_label: label });
   }
 }
+
+// ── Scroll Depth Tracking (25 / 50 / 75 / 90%) ──
+(function() {
+  const milestones = [25, 50, 75, 90];
+  const reached = new Set();
+  function checkScroll() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (docHeight <= 0) return;
+    const pct = Math.round((scrollTop / docHeight) * 100);
+    milestones.forEach(m => {
+      if (pct >= m && !reached.has(m)) {
+        reached.add(m);
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'scroll_depth', {
+            event_category: 'engagement',
+            event_label: m + '%',
+            value: m
+          });
+        }
+      }
+    });
+  }
+  window.addEventListener('scroll', checkScroll, { passive: true });
+})();
 
 // ── Weather (Open-Meteo — free, no API key) ──
 const WMO_EMOJI = {
