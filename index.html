@@ -2880,15 +2880,7 @@ async function fetchWeather(lat, lon, locName) {
 }
 
 function initWeather() {
-  if (!navigator.geolocation) {
-    fetchWeather(37.5665, 126.9780, 'Seoul');
-    return;
-  }
-  navigator.geolocation.getCurrentPosition(
-    pos => fetchWeather(pos.coords.latitude, pos.coords.longitude, 'Here'),
-    ()  => fetchWeather(37.5665, 126.9780, 'Seoul'),
-    { timeout: 5000 }
-  );
+  fetchWeather(37.5665, 126.9780, 'Seoul');
 }
 
 // ── Init ──
