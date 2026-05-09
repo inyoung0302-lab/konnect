@@ -349,6 +349,14 @@
       text-align: center;
       line-height: 1.3;
     }
+    .tool-sublabel {
+      font-size: 9px;
+      font-weight: 400;
+      color: var(--gray);
+      text-align: center;
+      margin-top: 1px;
+      line-height: 1.2;
+    }
 
     /* ─── Horizontal Scroll ─── */
     .scroll-row {
@@ -395,6 +403,28 @@
     .feat-card-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
     .feat-card-meta { font-size: 11px; color: var(--gray); }
     .feat-card-price { font-size: 13px; font-weight: 700; color: var(--primary); margin-top: 6px; }
+
+    /* ─── Seoul Now Cards ─── */
+    .now-card {
+      min-width: 160px;
+      background: white;
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.15s;
+      border-left: 4px solid var(--primary);
+    }
+    .now-card:active { transform: scale(0.97); }
+    .now-card.green  { border-left-color: var(--green); }
+    .now-card.orange { border-left-color: var(--orange); }
+    .now-card.blue   { border-left-color: #007AFF; }
+    .now-card.purple { border-left-color: #AF52DE; }
+    .now-card-emoji  { font-size: 28px; margin-bottom: 8px; }
+    .now-card-title  { font-size: 13px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+    .now-card-date   { font-size: 11px; color: var(--gray); margin-bottom: 4px; }
+    .now-card-loc    { font-size: 10px; background: var(--light-gray); border-radius: 4px; padding: 2px 6px; display: inline-block; font-weight: 600; }
 
     /* ─── Stats Banner ─── */
     /* stats-banner removed */
@@ -1060,6 +1090,7 @@
           <span data-appicon-fb="wowpass" style="font-size:26px;">💳</span>
         </div>
         <div class="tool-label" data-i18n="tool.wowpass">Wowpass</div>
+        <div class="tool-sublabel">Payment</div>
       </div>
 
       <!-- Naver Map -->
@@ -1069,6 +1100,7 @@
           <span data-appicon-fb="navermap" style="font-size:26px;">🗺️</span>
         </div>
         <div class="tool-label" data-i18n="tool.navermap">Naver Map</div>
+        <div class="tool-sublabel">Navigation</div>
       </div>
 
       <!-- Papago -->
@@ -1078,6 +1110,7 @@
           <span data-appicon-fb="papago" style="font-size:26px;">🌐</span>
         </div>
         <div class="tool-label" data-i18n="tool.papago">Papago</div>
+        <div class="tool-sublabel">Translator</div>
       </div>
 
       <!-- Kakao Subway -->
@@ -1087,6 +1120,7 @@
           <span data-appicon-fb="kakaosubway" style="font-size:26px;">🚇</span>
         </div>
         <div class="tool-label">Kakao Subway</div>
+        <div class="tool-sublabel">Subway</div>
       </div>
 
       <!-- KakaoTalk -->
@@ -1096,6 +1130,7 @@
           <span data-appicon-fb="kakaotalk" style="font-size:26px;">💬</span>
         </div>
         <div class="tool-label">KakaoTalk</div>
+        <div class="tool-sublabel">Messenger</div>
       </div>
 
       <!-- Kakao T -->
@@ -1105,62 +1140,60 @@
           <span data-appicon-fb="kakaot" style="font-size:26px;">🚕</span>
         </div>
         <div class="tool-label">Kakao T</div>
+        <div class="tool-sublabel">Taxi</div>
       </div>
     </div>
 
-    <!-- Featured Activities -->
-    <div class="section-header">
-      <div class="section-title" data-i18n="home.featured">✨ Featured Activities</div>
-      <div class="section-more" onclick="switchTab('tab-activities')" data-i18n="home.seeMore">See more</div>
+    <!-- ① Featured Activities -->
+    <div class="section-header" style="margin-top:8px;">
+      <div class="section-title">✨ Featured Activities</div>
+      <div class="section-more" onclick="switchTab('tab-activities')">See all →</div>
     </div>
     <div class="scroll-row" id="featuredRow">
-      <!-- Populated by JS — each card calls showComingSoonCard() -->
+      <!-- Populated by renderFeatured() -->
     </div>
 
-    <div class="spacer"></div>
-
-    <!-- Must-Do -->
-    <div class="section-header">
-      <div class="section-title">💎 Must-Do in Seoul</div>
+    <!-- ② Korea Now -->
+    <div class="section-header" style="margin-top:20px;">
+      <div class="section-title">🇰🇷 Korea Now</div>
+      <div class="section-more">May 2026</div>
     </div>
     <div class="scroll-row">
-      <div class="feat-card" onclick="showComingSoonCard('Korean Baseball','⚾','K-Culture')">
-        <div class="feat-card-img" style="background:#FFF0E8"><div class="feat-card-badge orange">Popular</div>⚾</div>
-        <div class="feat-card-body">
-          <div class="feat-card-title">Korean Baseball</div>
-          <div class="feat-card-meta">🕒 3–4 hrs · Sports</div>
-          <div class="feat-card-price">From ₩15,000</div>
-        </div>
+      <div class="now-card green" onclick="trackEvent('now_card_click','jazz_festival'); window.open('https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=79824','_blank')">
+        <div class="now-card-emoji">🎷</div>
+        <div class="now-card-title">Seoul Jazz Festival</div>
+        <div class="now-card-date">May 23–25</div>
+        <div class="now-card-loc">📍 Olympic Park</div>
       </div>
-      <div class="feat-card" onclick="showComingSoonCard('Strawberry Picking','🍓','Food')">
-        <div class="feat-card-img" style="background:#FFF5E8"><div class="feat-card-badge green">New</div>🍓</div>
-        <div class="feat-card-body">
-          <div class="feat-card-title">Strawberry Picking</div>
-          <div class="feat-card-meta">🕒 3 hrs · Food</div>
-          <div class="feat-card-price">From ₩40,000</div>
-        </div>
+      <div class="now-card" onclick="trackEvent('now_card_click','lotus_lantern'); window.open('https://english.seoul.go.kr/lotus-lantern-festival/','_blank')">
+        <div class="now-card-emoji">🪔</div>
+        <div class="now-card-title">Lotus Lantern Festival</div>
+        <div class="now-card-date">May 10–12</div>
+        <div class="now-card-loc">📍 Jongno</div>
       </div>
-      <div class="feat-card" onclick="showComingSoonCard('Personal Color','🌈','K-Beauty')">
-        <div class="feat-card-img" style="background:#FFF0F5"><div class="feat-card-badge">Hot</div>🌈</div>
-        <div class="feat-card-body">
-          <div class="feat-card-title">Personal Color</div>
-          <div class="feat-card-meta">🕒 1.5 hrs · K-Beauty</div>
-          <div class="feat-card-price">From ₩60,000</div>
-        </div>
+      <div class="now-card orange" onclick="trackEvent('now_card_click','han_river_night'); window.open('https://english.visitseoul.net/events/yeouido-world-night-market_/28911','_blank')">
+        <div class="now-card-emoji">🌊</div>
+        <div class="now-card-title">Han River Night Market</div>
+        <div class="now-card-date">Every Fri–Sun</div>
+        <div class="now-card-loc">📍 Yeouido</div>
       </div>
-      <div class="feat-card" onclick="showComingSoonCard('K-Pop Photo Shoot','📸','K-Culture')">
-        <div class="feat-card-img" style="background:#F0E8FF"><div class="feat-card-badge green">New</div>📸</div>
-        <div class="feat-card-body">
-          <div class="feat-card-title">K-Pop Photo Shoot</div>
-          <div class="feat-card-meta">🕒 2 hrs · K-Culture</div>
-          <div class="feat-card-price">From ₩70,000</div>
-        </div>
+      <div class="now-card blue" onclick="trackEvent('now_card_click','garden_show'); window.open('https://english.visitseoul.net/events/2025%20Seoul%20International%20Garden%20Show_/49142','_blank')">
+        <div class="now-card-emoji">🌷</div>
+        <div class="now-card-title">Seoul Garden Show</div>
+        <div class="now-card-date">May 22–Oct 20</div>
+        <div class="now-card-loc">📍 Boramae Park</div>
+      </div>
+      <div class="now-card purple" onclick="trackEvent('now_card_click','kpop_busking'); window.open('https://english.visitseoul.net/hallyu','_blank')">
+        <div class="now-card-emoji">🎤</div>
+        <div class="now-card-title">K-Pop Live Concerts</div>
+        <div class="now-card-date">Every weekend</div>
+        <div class="now-card-loc">📍 Hongdae</div>
       </div>
     </div>
 
     <!-- Privacy footer -->
     <div style="padding: 16px 20px; text-align:center; font-size:11px; color:var(--gray); line-height:1.8;">
-      © 2025 K-connect by Heyz Company
+      © 2025 K-connect by Hayes Company
       &nbsp;·&nbsp;
       <span onclick="showPrivacyPolicy()" style="text-decoration:underline; cursor:pointer;">Privacy Policy</span>
       &nbsp;·&nbsp;
@@ -1659,7 +1692,7 @@
         <p><strong>How we use it</strong><br>Your email is used solely to notify you when a requested K-connect experience becomes available. We will never share or sell your data to third parties.</p><br>
         <p><strong>Analytics</strong><br>We use Google Analytics 4 to understand how visitors use the app (page views, clicks). No personally identifiable information is collected via analytics.</p><br>
         <p><strong>Cookies</strong><br>We use localStorage to remember your login preference. No third-party tracking cookies are used.</p><br>
-        <p><strong>Contact</strong><br>Questions? Email us at <a href="mailto:hello@k-connect.app" style="color:var(--primary);">hello@k-connect.app</a></p>
+        <p><strong>Contact</strong><br>Questions? Email us at <a href="mailto:hayescompany0501@gmail.com" style="color:var(--primary);">hayescompany0501@gmail.com</a></p>
       </div>
     </div>
   </div>
@@ -1974,6 +2007,167 @@ const activities = [
     price: 'Free consult',
     rating: 4.9,
     reviews: 892,
+    featured: false
+  },
+  // ── NEW: Data-driven additions (2025 trend research) ──
+  {
+    id: 15,
+    category: 'Food',
+    catColor: '#FF9500',
+    catBg: '#FFF5E8',
+    emoji: '🥩',
+    title: 'Korean BBQ (Samgyeopsal) Night',
+    desc: 'The #1 must-eat in Korea. Grill premium pork belly tableside, wrap in ssam leaves, and share soju with new friends. We book the best spots so you skip the 2-hour queue.',
+    titleJP: '韓国BBQ（サムギョプサル）の夜',
+    descJP: '韓国で絶対食べたい№1。上質な豚バラ肉をテーブルで焼き、サム葉で包んでソジュと乾杯。行列なしの名店を予約済み。',
+    titleCN: '韩国烤肉（五花肉）之夜',
+    descCN: '韩国必吃第一名。桌边炭烤优质五花肉，用生菜包裹，与新朋友共饮烧酒。提前预订热门餐厅，无需排队2小时。',
+    tags: ['Mapo', 'No queue', 'Soju included'],
+    duration: '2 hrs',
+    language: 'EN/JP/CN',
+    price: '₩28,000',
+    rating: 4.9,
+    reviews: 1204,
+    featured: true
+  },
+  {
+    id: 16,
+    category: 'K-Culture',
+    catColor: '#007AFF',
+    catBg: '#E8F4FF',
+    emoji: '♨️',
+    title: 'Jjimjilbang (Korean Spa) Experience',
+    desc: 'Stay overnight in a traditional Korean communal bathhouse. Hot tubs, cold plunge, sauna rooms, floor heating, and unlimited ramen at 2am. Nothing like it anywhere else in the world.',
+    titleJP: 'チムジルバン（韓国式サウナ）体験',
+    descJP: '伝統的な韓国式銭湯で一夜を過ごす。湯船、冷水浴、サウナ、床暖房、深夜のラーメン。世界中どこにもないユニークな体験。',
+    titleCN: '汗蒸幕（韩式桑拿浴）体验',
+    descCN: '在传统韩式公共浴场过夜。温泉池、冷水浸泡、汗蒸房、地暖休息区，凌晨2点还能吃拉面。全球独一无二的体验。',
+    tags: ['24hrs', 'Unisex lounge', 'Towel included'],
+    duration: 'Overnight',
+    language: 'All',
+    price: '₩15,000',
+    rating: 4.8,
+    reviews: 876,
+    featured: true
+  },
+  {
+    id: 17,
+    category: 'K-Culture',
+    catColor: '#007AFF',
+    catBg: '#E8F4FF',
+    emoji: '🎤',
+    title: 'Norebang (Private Karaoke) Session',
+    desc: 'Korea\'s private karaoke rooms are a rite of passage. Your own room, your own microphone, tambourines, and a song list with 50,000 songs. The most fun ₩10,000 you\'ll spend in Seoul.',
+    titleJP: 'ノレバン（プライベートカラオケ）',
+    descJP: '韓国式個室カラオケは必須体験。専用ルーム、マイク、タンバリン、50,000曲のリスト。ソウルで最高の₩10,000の使い道。',
+    titleCN: '歌房（私人KTV）体验',
+    descCN: '韩国私人包厢KTV是必打卡项目。专属包厢、麦克风、铃鼓，50,000首歌曲任选。首尔最值₩10,000的消费。',
+    tags: ['Hongdae', 'Private room', 'Tambourine included'],
+    duration: '2 hrs',
+    language: 'All',
+    price: '₩10,000',
+    rating: 4.9,
+    reviews: 2103,
+    featured: true
+  },
+  {
+    id: 18,
+    category: 'K-Culture',
+    catColor: '#007AFF',
+    catBg: '#E8F4FF',
+    emoji: '🌊',
+    title: 'Han River Picnic & Cycling',
+    desc: 'Grab chimaek (fried chicken + beer) from a convenience store, rent a bicycle, and watch the sunset on the Han River. Seoul\'s most beloved weekend ritual — and it costs almost nothing.',
+    titleJP: '漢江ピクニック＆サイクリング',
+    descJP: 'コンビニでチメク（チキン＋ビール）を買い、自転車を借りて漢江でサンセットを。ソウル市民に最も愛される週末の儀式。ほぼ無料。',
+    titleCN: '汉江野餐骑行',
+    descCN: '从便利店买炸鸡加啤酒，租辆自行车，在汉江边看日落。首尔人最喜欢的周末仪式，几乎不花钱。',
+    tags: ['Yeouido', 'Bike rental', 'Sunset view'],
+    duration: '3 hrs',
+    language: 'All',
+    price: '₩8,000',
+    rating: 4.9,
+    reviews: 3421,
+    featured: true
+  },
+  {
+    id: 19,
+    category: 'K-Culture',
+    catColor: '#007AFF',
+    catBg: '#E8F4FF',
+    emoji: '🪖',
+    title: 'DMZ Border Tour',
+    desc: 'The most unique day trip you can take from any city in the world. Stand meters from North Korea at the JSA, descend into a secret tunnel, and feel history in real time.',
+    titleJP: 'DMZ（非武装地帯）ツアー',
+    descJP: '世界のどの都市からも体験できない最もユニークな日帰りツアー。JSAで北朝鮮を目の前に、秘密のトンネルへ潜入、歴史をリアルに体感。',
+    titleCN: 'DMZ非武装地带之旅',
+    descCN: '全球任何城市都无法提供的最独特一日游。在JSA与北朝鲜相隔咫尺，进入秘密隧道，实时感受历史。',
+    tags: ['Day trip', 'Transport included', 'English guide'],
+    duration: '8 hrs',
+    language: 'EN/JP/CN',
+    price: '₩60,000',
+    rating: 4.8,
+    reviews: 1567,
+    featured: false
+  },
+  {
+    id: 20,
+    category: 'K-Culture',
+    catColor: '#007AFF',
+    catBg: '#E8F4FF',
+    emoji: '☕',
+    title: 'Unique Themed Cafe Tour',
+    desc: 'Seoul has the world\'s most creative cafes — raccoon cafes, cloud dessert bars, "Harry Potter" style libraries, underground NYC subway-themed coffee bars. We curate 3 stops in one afternoon.',
+    titleJP: 'ユニークなテーマカフェ巡り',
+    descJP: 'ソウルには世界一個性的なカフェが集結。アライグマカフェ、クラウドデザート、NYサブウェイテーマのコーヒーバーなど。厳選3店舗を一午後で巡ります。',
+    titleCN: '特色主题咖啡馆打卡之旅',
+    descCN: '首尔拥有全球最有创意的咖啡馆——浣熊咖啡馆、云朵甜品吧、纽约地铁主题咖啡馆。一个下午精选3家打卡。',
+    tags: ['Gangnam', 'Hongdae', 'Instagram-worthy'],
+    duration: '3 hrs',
+    language: 'EN/JP',
+    price: '₩20,000',
+    rating: 4.7,
+    reviews: 654,
+    featured: false
+  },
+  {
+    id: 21,
+    category: 'K-Culture',
+    catColor: '#007AFF',
+    catBg: '#E8F4FF',
+    emoji: '🎵',
+    title: 'K-Pop District & Idol Walk',
+    desc: 'Walk past HYBE (BTS), SM, YG, and JYP headquarters. Visit the actual cafes and streets where your favorite idols hang out. End at a live busking show in Hongdae.',
+    titleJP: 'K-POPアイドル聖地巡礼',
+    descJP: 'HYBE（BTS）、SM、YG、JYP本社を巡礼。推しアイドルが通うカフェや街角を訪問。最後は弘大のライブバスキングで締め括り。',
+    titleCN: 'K-pop偶像巡礼之旅',
+    descCN: '探访HYBE（BTS）、SM、YG、JYP总部。前往偶像常去的咖啡馆和街道，最后在弘大欣赏现场街头表演收尾。',
+    tags: ['Hongdae', 'Mapo', 'Live busking'],
+    duration: '4 hrs',
+    language: 'EN/JP',
+    price: '₩35,000',
+    rating: 4.9,
+    reviews: 987,
+    featured: true
+  },
+  {
+    id: 22,
+    category: 'K-Culture',
+    catColor: '#007AFF',
+    catBg: '#E8F4FF',
+    emoji: '🗼',
+    title: 'Namsan Tower Night View',
+    desc: 'The most romantic spot in Seoul. Take the cable car up, attach a love lock with your travel partner, and watch 10 million city lights spread below you. Iconic for a reason.',
+    titleJP: '南山タワー夜景',
+    descJP: 'ソウル一のロマンティックスポット。ケーブルカーで登り、愛の南京錠をかけ、1000万の夜景を一望。名所には理由がある。',
+    titleCN: '南山塔夜景',
+    descCN: '首尔最浪漫的地方。乘缆车登顶，与旅伴挂上爱情锁，俯瞰千万灯火璀璨的城市夜景。成为地标自有其道理。',
+    tags: ['Cable car', 'Love locks', 'Night view'],
+    duration: '2 hrs',
+    language: 'All',
+    price: '₩14,000',
+    rating: 4.8,
+    reviews: 2876,
     featured: false
   },
 ];
