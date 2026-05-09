@@ -1098,13 +1098,13 @@
         <div class="tool-label">KakaoTalk</div>
       </div>
 
-      <!-- Korail -->
-      <div class="tool-item" onclick="smartOpen('korail')">
+      <!-- Kakao T -->
+      <div class="tool-item" onclick="smartOpen('kakaot')">
         <div class="tool-icon-wrap" style="background:transparent; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
-          <img data-appicon="korail" style="display:none;" alt="Korail">
-          <span data-appicon-fb="korail" style="font-size:26px;">🚄</span>
+          <img data-appicon="kakaot" style="display:none;" alt="Kakao T">
+          <span data-appicon-fb="kakaot" style="font-size:26px;">🚕</span>
         </div>
-        <div class="tool-label">Korail (KTX)</div>
+        <div class="tool-label">Kakao T</div>
       </div>
     </div>
 
@@ -2247,18 +2247,11 @@ function getIconSVG(key) {
       `<polygon points="20,38 25,33 31,39" fill="%233C1E1E"/>` +
       `<text x="28" y="30" font-family="Arial Black,Arial" font-size="11" font-weight="900" fill="%23FFCD00" text-anchor="middle">TALK</text>` +
       `</svg>`,
-    korail:
-      // 밝은 회색 배경 + 파란 KTX 기차 + 우상단 노란 + 뱃지
+    kakaot:
+      // 노란 배경 + 검은 T + 택시 아이콘 (카카오T 스타일)
       `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56">` +
-      `<rect width="56" height="56" rx="14" fill="%23F0F0F0"/>` +
-      `<path d="M7 27L14 19L46 19Q51 19 51 24L51 33Q51 38 46 38L14 38Z" fill="%231A5BB7"/>` +
-      `<path d="M7 27L14 19L46 19Q51 19 51 24L51 26L7 26Z" fill="%23C8D8EF"/>` +
-      `<rect x="17" y="27" width="7" height="6" rx="1" fill="%23E8F2FF"/>` +
-      `<rect x="27" y="27" width="7" height="6" rx="1" fill="%23E8F2FF"/>` +
-      `<rect x="37" y="27" width="7" height="6" rx="1" fill="%23E8F2FF"/>` +
-      `<text x="31" y="37" font-family="Arial Black,Arial" font-size="8" font-weight="900" fill="white" text-anchor="middle">KTX</text>` +
-      `<rect x="37" y="5" width="15" height="15" rx="5" fill="%23FFB300"/>` +
-      `<text x="44.5" y="16.5" font-family="Arial Black,Arial" font-size="13" font-weight="900" fill="white" text-anchor="middle">+</text>` +
+      `<rect width="56" height="56" rx="14" fill="%23FFCD00"/>` +
+      `<text x="28" y="36" font-family="Arial Black,Arial" font-size="30" font-weight="900" fill="%233C1E1E" text-anchor="middle">T</text>` +
       `</svg>`,
   };
   return `data:image/svg+xml,${svgs[key]}`;
@@ -2269,9 +2262,9 @@ async function initAppIcons() {
     { key: 'wowpass',     id: '1494936001' },
     { key: 'navermap',    id: '311867728'  },
     { key: 'papago',      id: '1147874819' },
-    { key: 'kakaosubway', id: '1006435967' },
+    { key: 'kakaosubway', id: '1095533900' },
     { key: 'kakaotalk',   id: '362057947'  },
-    { key: 'korail',      id: '361316040'  },
+    { key: 'kakaot',      id: '981110422'  },
   ];
 
   // Step 1 — Show SVG icon replicas immediately (zero latency, always correct)
@@ -2473,7 +2466,7 @@ const appConfig = {
     emoji: '🚇',
     desc: 'Seoul & Korea subway map',
     scheme: 'kakaomap://',
-    ios: 'https://apps.apple.com/app/id1006435967',
+    ios: 'https://apps.apple.com/app/id1095533900',
     android: 'https://play.google.com/store/apps/details?id=com.kakao.subway',
     web: 'https://map.kakao.com'
   },
@@ -2486,14 +2479,14 @@ const appConfig = {
     android: 'https://play.google.com/store/apps/details?id=com.kakao.talk',
     web: 'https://www.kakaocorp.com/page/service/service/KakaoTalk'
   },
-  korail: {
-    name: 'Korail (KTX)',
-    emoji: '🚄',
-    desc: 'Korea train & KTX tickets',
-    scheme: '',
-    ios: 'https://apps.apple.com/app/id361316040',
-    android: 'https://play.google.com/store/apps/details?id=com.korail.talk',
-    web: 'https://www.letskorail.com'
+  kakaot: {
+    name: 'Kakao T',
+    emoji: '🚕',
+    desc: 'Taxi, bus & bike — all in one',
+    scheme: 'kakaot://',
+    ios: 'https://apps.apple.com/app/id981110422',
+    android: 'https://play.google.com/store/apps/details?id=com.kakao.taxi',
+    web: 'https://kakaomobility.com'
   }
 };
 
