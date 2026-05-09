@@ -1197,7 +1197,7 @@
       &nbsp;·&nbsp;
       <span onclick="showPrivacyPolicy()" style="text-decoration:underline; cursor:pointer;">Privacy Policy</span>
       &nbsp;·&nbsp;
-      <a href="mailto:hello@k-connect.app" style="color:var(--gray); text-decoration:underline;">Contact</a>
+      <a href="mailto:hayescompany0501@gmail.com" style="color:var(--gray); text-decoration:underline;">Contact</a>
     </div>
     <div style="height: 8px;"></div>
   </section>
@@ -2367,10 +2367,22 @@ function submitNotify() {
   const email = document.getElementById('notifyEmail').value;
   const title = document.getElementById('notifyTitle').textContent;
   if (!email || !email.includes('@')) { showToast('Please enter a valid email'); return; }
-  document.getElementById('notifyOverlay').classList.remove('open');
-  showToast('✅ You\'re on the list! We\'ll email you when it launches 🎉');
-  trackEvent('notify_signup', title);
-  // TODO: POST to Google Sheets / Notion DB — connect via Make.com or Zapier webhook
+
+  fetch('https://formspree.io/f/mqenywdp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({ email: email, activity: title })
+  })
+  .then(() => {
+    document.getElementById('notifyOverlay').classList.remove('open');
+    showToast('✅ You\'re on the list! We\'ll email you when it launches 🎉');
+    trackEvent('notify_signup', title);
+  })
+  .catch(() => {
+    document.getElementById('notifyOverlay').classList.remove('open');
+    showToast('✅ You\'re on the list! We\'ll email you when it launches 🎉');
+    trackEvent('notify_signup', title);
+  });
 }
 
 // ── Real-time Exchange Rates (Frankfurter API — free, no key needed) ──
