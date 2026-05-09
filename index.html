@@ -323,7 +323,7 @@
     /* ─── Quick Tools Grid ─── */
     .tools-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       padding: 0 20px 4px;
     }
@@ -1035,7 +1035,7 @@
           </div>
         </div>
         <div>
-          <h1>All of Korea,<br>in your <em>pocket</em>.</h1>
+          <h1>Seoul,<br><em>Unlocked.</em></h1>
           <div class="hero-sub">
             <span>🗺 Navigate</span><div class="dot"></div>
             <span>💱 Exchange</span><div class="dot"></div>
@@ -1080,30 +1080,31 @@
         <div class="tool-label" data-i18n="tool.papago">Papago</div>
       </div>
 
-      <!-- Seoul Metro -->
-      <div class="tool-item" onclick="smartOpen('subway')">
+      <!-- Kakao Subway -->
+      <div class="tool-item" onclick="smartOpen('kakaosubway')">
         <div class="tool-icon-wrap" style="background:transparent; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
-          <img data-appicon="subway" style="display:none;" alt="Seoul Metro">
-          <span data-appicon-fb="subway" style="font-size:26px;">🚇</span>
+          <img data-appicon="kakaosubway" style="display:none;" alt="Kakao Subway">
+          <span data-appicon-fb="kakaosubway" style="font-size:26px;">🚇</span>
         </div>
-        <div class="tool-label" data-i18n="tool.subway">Seoul Metro</div>
+        <div class="tool-label">Kakao Subway</div>
       </div>
 
-      <div class="tool-item" onclick="trackEvent('app_click','emergency');switchTab('tab-sos')">
-        <div class="tool-icon-wrap" style="background:#FFE8E8">🆘</div>
-        <div class="tool-label" data-i18n="tool.emergency">Emergency</div>
+      <!-- KakaoTalk -->
+      <div class="tool-item" onclick="smartOpen('kakaotalk')">
+        <div class="tool-icon-wrap" style="background:transparent; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
+          <img data-appicon="kakaotalk" style="display:none;" alt="KakaoTalk">
+          <span data-appicon-fb="kakaotalk" style="font-size:26px;">💬</span>
+        </div>
+        <div class="tool-label">KakaoTalk</div>
       </div>
-      <div class="tool-item" onclick="openExternal('https://maps.google.com/maps?q=restaurants+near+me+seoul')">
-        <div class="tool-icon-wrap" style="background:#FFF0E8">🍜</div>
-        <div class="tool-label" data-i18n="tool.foodmap">Food Map</div>
-      </div>
-      <div class="tool-item" onclick="trackEvent('app_click','concierge');showConcierge()">
-        <div class="tool-icon-wrap" style="background:#E8FFF5">🛎️</div>
-        <div class="tool-label" data-i18n="tool.concierge">Concierge</div>
-      </div>
-      <div class="tool-item" onclick="trackEvent('app_click','activities');switchTab('tab-activities')">
-        <div class="tool-icon-wrap" style="background:#FFE8F5">✨</div>
-        <div class="tool-label" data-i18n="tool.activities">Activities</div>
+
+      <!-- Korail -->
+      <div class="tool-item" onclick="smartOpen('korail')">
+        <div class="tool-icon-wrap" style="background:transparent; overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;">
+          <img data-appicon="korail" style="display:none;" alt="Korail">
+          <span data-appicon-fb="korail" style="font-size:26px;">🚄</span>
+        </div>
+        <div class="tool-label">Korail (KTX)</div>
       </div>
     </div>
 
@@ -2201,6 +2202,7 @@ async function fetchExchangeRates() {
 
 // ── App Icons: SVG replicas (instant) + real App Store icons (progressive) ──
 function getIconSVG(key) {
+  // All SVGs use ASCII only — Korean text breaks data:image/svg+xml URIs
   const svgs = {
     wowpass:
       `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56">` +
@@ -2208,28 +2210,55 @@ function getIconSVG(key) {
       `<text x="28" y="42" font-family="Arial Black,Arial" font-size="34" font-weight="900" fill="%23FF5E00" text-anchor="middle">W</text>` +
       `</svg>`,
     navermap:
+      // 흰 배경 + 파란→초록 그라데이션 지도핀 + 흰 N
       `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56">` +
-      `<defs><linearGradient id="ng" x1="0" y1="0" x2="1" y2="1">` +
-      `<stop offset="0%25" stop-color="%2303D25C"/>` +
-      `<stop offset="100%25" stop-color="%2300A2E0"/>` +
+      `<defs><linearGradient id="nmg" x1="0.4" y1="0" x2="0.6" y2="1">` +
+      `<stop offset="0%" stop-color="%234E8EE9"/><stop offset="100%" stop-color="%2303C75A"/>` +
       `</linearGradient></defs>` +
-      `<rect width="56" height="56" rx="12" fill="url(%23ng)"/>` +
-      `<text x="28" y="41" font-family="Arial Black,Arial" font-size="34" font-weight="900" fill="white" text-anchor="middle">N</text>` +
+      `<rect width="56" height="56" rx="14" fill="white"/>` +
+      `<path d="M28 5C19.2 5 12 12.2 12 21C12 32.8 28 51 28 51C28 51 44 32.8 44 21C44 12.2 36.8 5 28 5Z" fill="url(%23nmg)"/>` +
+      `<text x="28" y="27" font-family="Arial Black,Arial" font-size="17" font-weight="900" fill="white" text-anchor="middle">N</text>` +
       `</svg>`,
     papago:
+      // 밝은 파란 배경 + 파란 앵무새(초록 부리/날개, 흰 눈)
       `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56">` +
-      `<rect width="56" height="56" rx="12" fill="white"/>` +
-      `<rect width="56" height="56" rx="12" fill="none" stroke="%23ddd" stroke-width="1.5"/>` +
-      `<circle cx="28" cy="24" r="14" fill="%230066FF"/>` +
-      `<circle cx="28" cy="24" r="10" fill="%23E8F3FF"/>` +
-      `<text x="28" y="28" font-family="Arial" font-size="10" font-weight="800" fill="%230066FF" text-anchor="middle">Pa</text>` +
-      `<text x="28" y="48" font-family="Arial" font-size="8" fill="%230066FF" text-anchor="middle">PAPAGO</text>` +
+      `<rect width="56" height="56" rx="14" fill="%23E8F4FF"/>` +
+      `<ellipse cx="25" cy="38" rx="13" ry="11" fill="%234A8FE0"/>` +
+      `<circle cx="25" cy="22" r="12" fill="%234A8FE0"/>` +
+      `<path d="M34 19L44 22L34 25Z" fill="%2303A660"/>` +
+      `<path d="M35 31Q46 27 47 37Q41 42 35 38Z" fill="%2303A660"/>` +
+      `<path d="M17 46Q12 53 9 51Q13 44 17 40Z" fill="%234A8FE0"/>` +
+      `<circle cx="30" cy="20" r="6" fill="white"/>` +
+      `<circle cx="31" cy="20" r="4" fill="%231A1A2E"/>` +
+      `<circle cx="32.5" cy="18" r="1.5" fill="white"/>` +
       `</svg>`,
-    subway:
+    kakaosubway:
       `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56">` +
-      `<rect width="56" height="56" rx="12" fill="%233A1E6E"/>` +
-      `<text x="28" y="37" font-family="Arial Black,Arial" font-size="28" font-weight="900" fill="white" text-anchor="middle">M</text>` +
-      `<rect x="11" y="40" width="34" height="3.5" rx="1.75" fill="%23B89CFF"/>` +
+      `<rect width="56" height="56" rx="12" fill="%23FFCD00"/>` +
+      `<circle cx="28" cy="28" r="14" fill="none" stroke="%2300B0A8" stroke-width="5"/>` +
+      `<rect x="9" y="25.5" width="5" height="5" rx="2" fill="%2300B0A8"/>` +
+      `<rect x="42" y="25.5" width="5" height="5" rx="2" fill="%2300B0A8"/>` +
+      `<text x="28" y="33" font-family="Arial Black,Arial" font-size="14" font-weight="900" fill="%2300B0A8" text-anchor="middle">M</text>` +
+      `</svg>`,
+    kakaotalk:
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56">` +
+      `<rect width="56" height="56" rx="12" fill="%23FFCD00"/>` +
+      `<ellipse cx="28" cy="26" rx="17" ry="14" fill="%233C1E1E"/>` +
+      `<polygon points="20,38 25,33 31,39" fill="%233C1E1E"/>` +
+      `<text x="28" y="30" font-family="Arial Black,Arial" font-size="11" font-weight="900" fill="%23FFCD00" text-anchor="middle">TALK</text>` +
+      `</svg>`,
+    korail:
+      // 밝은 회색 배경 + 파란 KTX 기차 + 우상단 노란 + 뱃지
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56">` +
+      `<rect width="56" height="56" rx="14" fill="%23F0F0F0"/>` +
+      `<path d="M7 27L14 19L46 19Q51 19 51 24L51 33Q51 38 46 38L14 38Z" fill="%231A5BB7"/>` +
+      `<path d="M7 27L14 19L46 19Q51 19 51 24L51 26L7 26Z" fill="%23C8D8EF"/>` +
+      `<rect x="17" y="27" width="7" height="6" rx="1" fill="%23E8F2FF"/>` +
+      `<rect x="27" y="27" width="7" height="6" rx="1" fill="%23E8F2FF"/>` +
+      `<rect x="37" y="27" width="7" height="6" rx="1" fill="%23E8F2FF"/>` +
+      `<text x="31" y="37" font-family="Arial Black,Arial" font-size="8" font-weight="900" fill="white" text-anchor="middle">KTX</text>` +
+      `<rect x="37" y="5" width="15" height="15" rx="5" fill="%23FFB300"/>` +
+      `<text x="44.5" y="16.5" font-family="Arial Black,Arial" font-size="13" font-weight="900" fill="white" text-anchor="middle">+</text>` +
       `</svg>`,
   };
   return `data:image/svg+xml,${svgs[key]}`;
@@ -2237,10 +2266,12 @@ function getIconSVG(key) {
 
 async function initAppIcons() {
   const apps = [
-    { key: 'wowpass',  id: '1494936001' },
-    { key: 'navermap', id: '311867728'  },
-    { key: 'papago',   id: '1147874819' },
-    { key: 'subway',   id: '325924444'  },
+    { key: 'wowpass',     id: '1494936001' },
+    { key: 'navermap',    id: '311867728'  },
+    { key: 'papago',      id: '1147874819' },
+    { key: 'kakaosubway', id: '1006435967' },
+    { key: 'kakaotalk',   id: '362057947'  },
+    { key: 'korail',      id: '361316040'  },
   ];
 
   // Step 1 — Show SVG icon replicas immediately (zero latency, always correct)
@@ -2249,30 +2280,35 @@ async function initAppIcons() {
     const fb  = document.querySelector(`[data-appicon-fb="${key}"]`);
     if (img) {
       img.src = getIconSVG(key);
-      img.style.cssText = 'display:block;width:100%;height:100%;object-fit:cover;border-radius:14px;';
+      img.style.cssText = 'display:block;width:100%;height:100%;object-fit:cover;border-radius:16px;';
     }
     if (fb) fb.style.display = 'none';
   }
 
   // Step 2 — Silently upgrade to real App Store icons when API is available
-  await Promise.all(apps.map(async ({ key, id }) => {
-    try {
-      const res = await fetch(
-        `https://itunes.apple.com/lookup?id=${id}&country=kr&entity=software&limit=1`,
-        { signal: AbortSignal.timeout(5000) }
-      );
-      if (!res.ok) return;
-      const data = await res.json();
-      const artwork = data.results?.[0]?.artworkUrl512 || data.results?.[0]?.artworkUrl100;
-      if (!artwork) return;
-      const img = document.querySelector(`[data-appicon="${key}"]`);
-      if (!img) return;
-      // Only swap once the real image has fully loaded
-      const probe = new Image();
-      probe.onload = () => { img.src = artwork; };
-      probe.src = artwork;
-    } catch(e) { /* keep SVG replica silently */ }
-  }));
+  // Note: AbortSignal.timeout() is not supported in all browsers — use manual timeout instead
+  await Promise.all(apps.map(({ key, id }) => new Promise(resolve => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => { controller.abort(); resolve(); }, 6000);
+    fetch(
+      `https://itunes.apple.com/lookup?id=${id}&country=kr&entity=software&limit=1`,
+      { signal: controller.signal }
+    )
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        clearTimeout(timer);
+        if (!data) return resolve();
+        const artwork = data.results?.[0]?.artworkUrl512 || data.results?.[0]?.artworkUrl100;
+        if (!artwork) return resolve();
+        const img = document.querySelector(`[data-appicon="${key}"]`);
+        if (!img) return resolve();
+        const probe = new Image();
+        probe.onload = () => { img.src = artwork; resolve(); };
+        probe.onerror = resolve;
+        probe.src = artwork;
+      })
+      .catch(() => { clearTimeout(timer); resolve(); });
+  })));
 }
 
 // ── UTM Parameter → GA4 (critical for ad campaign attribution) ──
@@ -2401,16 +2437,16 @@ const appConfig = {
     emoji: '💳',
     desc: 'Foreign currency card & T-Money',
     scheme: 'wowpass://',
-    ios: 'https://apps.apple.com/kr/app/wowpass/id1494936001',
+    ios: 'https://apps.apple.com/app/id1494936001',
     android: 'https://play.google.com/store/apps/details?id=com.wowpass.app',
-    web: 'https://www.wowpass.io/ko'
+    web: 'https://www.wowpass.io'
   },
   navermap: {
     name: 'Naver Map',
     emoji: '🗺️',
     desc: 'Korea navigation — globally available',
     scheme: 'nmap://home',
-    ios: 'https://apps.apple.com/app/naver-map-navigation/id311867728',
+    ios: 'https://apps.apple.com/app/id311867728',
     android: 'https://play.google.com/store/apps/details?id=com.nhn.android.nmap',
     web: 'https://map.naver.com'
   },
@@ -2419,7 +2455,7 @@ const appConfig = {
     emoji: '🦜',
     desc: 'Korean translation by Naver',
     scheme: 'naverpapagoapp://',
-    ios: 'https://apps.apple.com/kr/app/naver-papago-ai-translator/id1147874819',
+    ios: 'https://apps.apple.com/app/id1147874819',
     android: 'https://play.google.com/store/apps/details?id=com.naver.labs.translator',
     web: 'https://papago.naver.com'
   },
@@ -2428,45 +2464,53 @@ const appConfig = {
     emoji: '🚇',
     desc: 'Seoul subway — globally available',
     scheme: 'subwaykorea://',
-    ios: 'https://apps.apple.com/app/subway-korea/id325924444',
+    ios: 'https://apps.apple.com/app/id325924444',
     android: 'https://play.google.com/store/apps/details?id=com.hyundaiitnec.metro.aos.seoul',
     web: 'https://www.seoulmetro.co.kr/en/'
+  },
+  kakaosubway: {
+    name: 'Kakao Subway',
+    emoji: '🚇',
+    desc: 'Seoul & Korea subway map',
+    scheme: 'kakaomap://',
+    ios: 'https://apps.apple.com/app/id1006435967',
+    android: 'https://play.google.com/store/apps/details?id=com.kakao.subway',
+    web: 'https://map.kakao.com'
+  },
+  kakaotalk: {
+    name: 'KakaoTalk',
+    emoji: '💬',
+    desc: 'Korea\'s #1 messaging app',
+    scheme: 'kakaolink://',
+    ios: 'https://apps.apple.com/app/id362057947',
+    android: 'https://play.google.com/store/apps/details?id=com.kakao.talk',
+    web: 'https://www.kakaocorp.com/page/service/service/KakaoTalk'
+  },
+  korail: {
+    name: 'Korail (KTX)',
+    emoji: '🚄',
+    desc: 'Korea train & KTX tickets',
+    scheme: '',
+    ios: 'https://apps.apple.com/app/id361316040',
+    android: 'https://play.google.com/store/apps/details?id=com.korail.talk',
+    web: 'https://www.letskorail.com'
   }
 };
 
 // ── Smart Open App ──
 function smartOpen(appKey) {
-  trackEvent('app_click', appKey); // GA4: 어떤 앱 아이콘 클릭했는지
+  trackEvent('app_click', appKey);
   const app = appConfig[appKey];
   const ua = navigator.userAgent;
   const isIOS = /iPad|iPhone|iPod/.test(ua);
   const isAndroid = /Android/.test(ua);
-  const isMobile = isIOS || isAndroid;
 
-  if (!isMobile) {
-    // Desktop: just open web version
-    window.open(app.web, '_blank');
-    return;
+  if (isAndroid) {
+    window.open(app.android, '_blank'); // → Google Play Store
+  } else {
+    // iOS + 데스크탑 모두 App Store로 (apps.apple.com은 PC 브라우저에서도 정상 작동)
+    window.open(app.ios, '_blank');     // → Apple App Store
   }
-
-  // Mobile: show bottom sheet with store + web options
-  document.getElementById('sheetIcon').textContent = app.emoji;
-  document.getElementById('sheetTitle').textContent = app.name;
-  document.getElementById('sheetSub').textContent = app.desc;
-
-  const storeUrl = isIOS ? app.ios : app.android;
-  const storeIcon = isIOS ? '🍎' : '🤖';
-  const storeName = isIOS ? 'Download on App Store' : 'Get it on Google Play';
-  const storeSub = isIOS ? 'Opens Apple App Store' : 'Opens Google Play Store';
-
-  document.getElementById('sheetStoreBtn').href = storeUrl;
-  document.getElementById('sheetStoreIcon').textContent = storeIcon;
-  document.getElementById('sheetStoreName').textContent = storeName;
-  document.getElementById('sheetStoreSub').textContent = storeSub;
-  document.getElementById('sheetWebBtn').href = app.web;
-
-  document.getElementById('appSheetOverlay').classList.add('open');
-  trackEvent('smart_open', appKey);
 }
 
 function closeAppSheet(e) {
