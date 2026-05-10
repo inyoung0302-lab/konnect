@@ -35,14 +35,14 @@
   <!-- ★ Google Sign-In — Replace YOUR_CLIENT_ID with OAuth 2.0 Client ID from console.cloud.google.com -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-  <!-- Google Analytics 4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QX87ESM4J1"></script>
+  <!-- Google Analytics 4 — dataLayer init BEFORE async load (prevents event loss) -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-QX87ESM4J1');
+    gtag('config', 'G-9KPS90B6BC');
   </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KPS90B6BC"></script>
 
   <style>
     /* ─── CSS Variables ─── */
@@ -2617,6 +2617,14 @@ function switchTab(tabId) {
   };
   document.getElementById(navMap[tabId]).classList.add('active');
   window.scrollTo(0, 0);
+  // GA4
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'page_view', { page_title: tabId, event_label: tabId });
+  }
+  // Meta Pixel
+  if (typeof fbq !== 'undefined') {
+    fbq('trackCustom', 'TabView', { tab: tabId });
+  }
   trackEvent('tab_view', tabId);
 }
 
@@ -2698,18 +2706,29 @@ const appConfig = {
 
 // ── Smart Open App ──
 function smartOpen(appKey) {
-  trackEvent('app_click', appKey);
-  const app = appConfig[appKey];
-  const ua = navigator.userAgent;
-  const isIOS = /iPad|iPhone|iPod/.test(ua);
-  const isAndroid = /Android/.test(ua);
+  const appDisplayNames = {
+    wowpass:     'WowPass',
+    navermap:    'NaverMap',
+    papago:      'Papago',
+    kakaosubway: 'KakaoMetro',
+    kakaotalk:   'KakaoTalk',
+    kakaot:      'KakaoT'
+  };
+  const appName = appDisplayNames[appKey] || appKey;
 
-  if (isAndroid) {
-    window.open(app.android, '_blank'); // → Google Play Store
-  } else {
-    // iOS + 데스크탑 모두 App Store로 (apps.apple.com은 PC 브라우저에서도 정상 작동)
-    window.open(app.ios, '_blank');     // → Apple App Store
+  // GA4 — app_name 파라미터 포함
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'app_click', { app_name: appName, event_label: appName });
   }
+  // Meta Pixel — AppClick 이벤트 + app_name
+  if (typeof fbq !== 'undefined') {
+    fbq('trackCustom', 'AppClick', { app_name: appName });
+  }
+
+  const app = appConfig[appKey];
+  const isAndroid = /Android/.test(navigator.userAgent);
+  // Android → Play Store / iOS + 데스크탑 → App Store (confirm 없이 바로 이동)
+  window.open(isAndroid ? app.android : app.ios, '_blank');
 }
 
 function closeAppSheet(e) {
@@ -2803,16 +2822,26 @@ function showToast(msg) {
   setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
-// ── GA4 Event Tracking ──
-function trackEvent(eventName, label) {
+// ── Unified Event Tracking (GA4 + Meta Pixel) ──
+function trackEvent(eventName, label, extraParams) {
+  const params = Object.assign({ event_label: label }, extraParams || {});
+  // GA4
   if (typeof gtag !== 'undefined') {
-    gtag('event', eventName, { event_label: label });
+    gtag('event', eventName, params);
+  }
+  // Meta Pixel — custom event (카멜케이스로 변환)
+  if (typeof fbq !== 'undefined') {
+    const pixelName = eventName
+      .split('_')
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+      .join('');
+    fbq('trackCustom', pixelName, params);
   }
 }
 
-// ── Scroll Depth Tracking (25 / 50 / 75 / 90%) ──
+// ── Scroll Depth Tracking (25 / 50 / 75 / 100%) — GA4 + Meta Pixel ──
 (function() {
-  const milestones = [25, 50, 75, 90];
+  const milestones = [25, 50, 75, 100];
   const reached = new Set();
   function checkScroll() {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -2822,12 +2851,17 @@ function trackEvent(eventName, label) {
     milestones.forEach(m => {
       if (pct >= m && !reached.has(m)) {
         reached.add(m);
+        // GA4
         if (typeof gtag !== 'undefined') {
           gtag('event', 'scroll_depth', {
             event_category: 'engagement',
             event_label: m + '%',
             value: m
           });
+        }
+        // Meta Pixel
+        if (typeof fbq !== 'undefined') {
+          fbq('trackCustom', 'ScrollDepth', { depth: m + '%', value: m });
         }
       }
     });
