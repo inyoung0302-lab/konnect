@@ -2715,18 +2715,29 @@ function smartOpen(appKey) {
     kakaot:      'KakaoT'
   };
   const appName = appDisplayNames[appKey] || appKey;
+  const ua = navigator.userAgent;
+  const isAndroid = /Android/.test(ua);
+  const isIOS = /iPad|iPhone|iPod/.test(ua);
+  const platform = isAndroid ? 'android' : isIOS ? 'ios' : 'desktop';
 
-  // GA4 — app_name 파라미터 포함
+  // GA4 — app_name + event_category + platform 파라미터
   if (typeof gtag !== 'undefined') {
-    gtag('event', 'app_click', { app_name: appName, event_label: appName });
+    gtag('event', 'app_click', {
+      app_name: appName,
+      event_category: 'app_download',
+      platform: platform
+    });
   }
-  // Meta Pixel — AppClick 이벤트 + app_name
+  // Meta Pixel — AppClick 이벤트 + 동일 파라미터
   if (typeof fbq !== 'undefined') {
-    fbq('trackCustom', 'AppClick', { app_name: appName });
+    fbq('trackCustom', 'AppClick', {
+      app_name: appName,
+      event_category: 'app_download',
+      platform: platform
+    });
   }
 
   const app = appConfig[appKey];
-  const isAndroid = /Android/.test(navigator.userAgent);
   // Android → Play Store / iOS + 데스크탑 → App Store (confirm 없이 바로 이동)
   window.open(isAndroid ? app.android : app.ios, '_blank');
 }
