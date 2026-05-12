@@ -2333,7 +2333,7 @@ function renderFeatured() {
   row.innerHTML = featured.map(a => {
     const displayTitle = currentLang === 'jp' && a.titleJP ? a.titleJP : currentLang === 'cn' && a.titleCN ? a.titleCN : a.title;
     return `
-    onclick="trackEvent('activity_card_click','${a.category}',{activity_title:'${displayTitle.replace(/'/g,"\\'")}'}); showComingSoonCard('${displayTitle.replace(/'/g,"\\'")}','${a.emoji}','${a.category}')">
+    <div class="feat-card" onclick="trackEvent('activity_card_click','${a.category}',{activity_title:'${displayTitle.replace(/'/g,"\\'")}'}); showComingSoonCard('${displayTitle.replace(/'/g,"\\'")}','${a.emoji}','${a.category}')">
       <div class="feat-card-img" style="background:${a.catBg}">
         <div class="feat-card-badge">🔥 Hot</div>
         ${a.emoji}
