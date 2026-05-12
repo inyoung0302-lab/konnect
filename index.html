@@ -1147,7 +1147,7 @@
     <!-- ① Featured Activities -->
     <div class="section-header" style="margin-top:8px;">
       <div class="section-title">✨ Featured Activities</div>
-      <div class="section-more" onclick="switchTab('tab-activities')">See all →</div>
+      onclick="trackEvent('featured_see_all_click','activities'); switchTab('tab-activities')">See all →
     </div>
     <div class="scroll-row" id="featuredRow">
       <!-- Populated by renderFeatured() -->
@@ -2333,7 +2333,7 @@ function renderFeatured() {
   row.innerHTML = featured.map(a => {
     const displayTitle = currentLang === 'jp' && a.titleJP ? a.titleJP : currentLang === 'cn' && a.titleCN ? a.titleCN : a.title;
     return `
-    <div class="feat-card" onclick="showComingSoonCard('${displayTitle.replace(/'/g,"\\'")}','${a.emoji}','${a.category}')">
+    onclick="trackEvent('activity_card_click','${a.category}',{activity_title:'${displayTitle.replace(/'/g,"\\'")}'}); showComingSoonCard('${displayTitle.replace(/'/g,"\\'")}','${a.emoji}','${a.category}')">
       <div class="feat-card-img" style="background:${a.catBg}">
         <div class="feat-card-badge">🔥 Hot</div>
         ${a.emoji}
